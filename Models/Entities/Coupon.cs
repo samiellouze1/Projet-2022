@@ -11,7 +11,7 @@ namespace Projet_2022.Models.Entities
         [ScaffoldColumn(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
-        public int Id { get; set; }
+        public string Id { get; set; }
         [Required]
         public int Code { get; set; }
         [Required]
@@ -24,7 +24,7 @@ namespace Projet_2022.Models.Entities
         public DateTime Startdate { get; set; }
         [Required]
         public DateTime Enddate { get; set; }
-        public int IdOrder { get; set; }
+        public string IdOrder { get; set; }
         [ForeignKey("IdOrder")]
         public virtual Order Order {get;set;}
     }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Projet_2022.Models.Assoc;
 using Projet_2022.Models.Entities;
+using System.Reflection.Emit;
 
 namespace Projet_2022.Data
 {
@@ -15,20 +16,20 @@ namespace Projet_2022.Data
             #region ProductTag
             builder.Entity<ProductTag>().HasKey(pt => new
             {
-                pt.ProductId,
-                pt.TagId
+                pt.IdProduct,
+                pt.IdTag
             });
-            builder.Entity<ProductTag>().HasOne(p => p.Product).WithMany(pt => pt.ProductTags).HasForeignKey(t => t.ProductId);
-            builder.Entity<ProductTag>().HasOne(t => t.Tag).WithMany(pt => pt.TagProducts).HasForeignKey(p => p.TagId);
+            builder.Entity<ProductTag>().HasOne(p => p.Product).WithMany(pt => pt.ProductTags).HasForeignKey(t => t.IdProduct);
+            builder.Entity<ProductTag>().HasOne(t => t.Tag).WithMany(pt => pt.TagProducts).HasForeignKey(p => p.IdTag);
             #endregion
 
             #region  Order
-            builder.Entity<Order>().HasOne(p => p.Product).WithMany(p => p.Orders).HasForeignKey(o => o.ProductId);
+            builder.Entity<Order>().HasOne(p => p.Product).WithMany(p => p.Orders).HasForeignKey(o => o.IdProduct);
             builder.Entity<Order>().HasOne(p => p.User).WithMany(p => p.Orders).HasForeignKey(o => o.IdUser);
             #endregion
 
             #region  productgalleryimage
-            builder.Entity<ProductGalleryImage>().HasOne(p => p.Product).WithMany(p => p.ProductGalleryImages).HasForeignKey(o => o.ProductId);
+            builder.Entity<ProductGalleryImage>().HasOne(p => p.Product).WithMany(p => p.ProductGalleryImages).HasForeignKey(o => o.IdProduct);
             #endregion
 
             #region  Product
@@ -44,6 +45,8 @@ namespace Projet_2022.Data
             builder.Entity<Employee>().HasOne(p => p.Country).WithMany(p => p.Employees).HasForeignKey(o => o.IdCountry);
             builder.Entity<Employee>().HasOne(p => p.Job).WithMany(p => p.Employees).HasForeignKey(o => o.IdJob);
             #endregion
+            base.OnModelCreating(builder);
+
 
         }
         public DbSet<Brand> Brands { get; set; }

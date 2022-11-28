@@ -11,7 +11,7 @@ namespace Projet_2022.Models.Entities
         [ScaffoldColumn(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
-        public int Id { get; set; }
+        public string Id { get; set; }
         [Required]
         public string Amount { get; set; }
         [Required]
@@ -28,11 +28,11 @@ namespace Projet_2022.Models.Entities
         public int Tracking_number { get; set; }
         [Required]
         public DateTime Date_of_order { get; set; }
-        public int ProductId { get; set; }
-        [ForeignKey("ProductId")]
+        public string IdProduct { get; set; }
+        [ForeignKey("IdProduct")]
         public virtual Product Product { get; set; }
         public virtual List<Coupon> Coupons { get; set; }
-        public int IdUser { get; set; }
+        public string IdUser { get; set; }
         [ForeignKey("IdUser")]
         public virtual User User {get; set;}
     }

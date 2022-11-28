@@ -11,12 +11,12 @@ namespace Projet_2022.Models.Entities
         [ScaffoldColumn(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
-        public int Id { get; set; }
+        public string Id { get; set; }
         [Required]
         public string Image { get; set; }
         [Required]
-        public int ProductId { get; set; }
-        [ForeignKey("ProductId")]
+        public string IdProduct { get; set; }
+        [ForeignKey("IdProduct")]
         public virtual Product Product { get; set; }
     }
 }

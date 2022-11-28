@@ -10,7 +10,7 @@ namespace Projet_2022.Models.Entities
         [Required]
         [ScaffoldColumn(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public string Id { get; set; }
         [Required]
         public string JobTitle { get; set; }
         [Required]

@@ -7,10 +7,10 @@ namespace Projet_2022.Data.Repository
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<IEnumerable<T>> GetAllAsync(params Expression<Func<T, object>>[] includeProperties);
-        Task<T> GetByIdAsync(int id);
-        Task<T> GetByIdAsync(int id, params Expression<Func<T, object>>[] includeProperties);
+        Task<T> GetByIdAsync(string id);
+        Task<T> GetByIdAsync(string id, params Expression<Func<T, object>>[] includeProperties);
         Task AddAsync(T entity);
-        Task UpdateAsync(int id, T entity);
-        Task DeleteAsync(int id);
+        Task UpdateAsync(string id, T entity);
+        Task DeleteAsync(string id);
     }
 }

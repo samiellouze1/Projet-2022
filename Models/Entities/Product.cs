@@ -13,7 +13,7 @@ namespace Projet_2022.Models.Entities
         [ScaffoldColumn(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
-        public int Id { get; set; }
+        public string Id { get; set; }
         [Required]
 
         public string Sku { get; set; }
@@ -46,11 +46,11 @@ namespace Projet_2022.Models.Entities
         public int StockStatus { get; set; }
 
         [Required]
-        public int IdBrand { get; set; }
+        public string IdBrand { get; set; }
         [ForeignKey("IdBrand")]
         public virtual Brand Brand { get; set; }
         [Required]
-        public int IdCategory { get; set; }
+        public string IdCategory { get; set; }
         [ForeignKey("IdCategory")]
         public virtual Category Category { get; set;}
 

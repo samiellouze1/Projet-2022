@@ -5,11 +5,11 @@ namespace Projet_2022.Models.Assoc
 {
     public class ProductTag
     {
-        public int ProductId { get; set; }
-        [ForeignKey("ProductId")]
+        public string IdProduct { get; set; }
+        [ForeignKey("IdProduct")]
         public virtual Product Product { get; set; }
-        public int TagId { get; set; }
-        [ForeignKey("TagId")]
+        public string IdTag { get; set; }
+        [ForeignKey("IdTag")]
         public virtual Tag Tag { get; set; }
     }
 }

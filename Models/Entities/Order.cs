@@ -13,7 +13,7 @@ namespace Projet_2022.Models.Entities
 
         public string Id { get; set; }
         [Required]
-        public string Amount { get; set; }
+        public int Amount { get; set; }
         [Required]
         public string Ship_address { get; set; }
         [Required]
@@ -32,8 +32,10 @@ namespace Projet_2022.Models.Entities
         [ForeignKey("IdProduct")]
         public virtual Product Product { get; set; }
         public virtual List<Coupon> Coupons { get; set; }
-        public string IdUser { get; set; }
-        [ForeignKey("IdUser")]
-        public virtual User User {get; set;}
+
+        [Required]
+        public string IdCart { get; set; }
+        [ForeignKey("IdCart")]
+        public virtual Cart Cart { get; set; }
     }
 }

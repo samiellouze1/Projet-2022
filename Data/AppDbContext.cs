@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Projet_2022.Models.Assoc;
 using Projet_2022.Models.Entities;
-using System.Reflection.Emit;
 
 namespace Projet_2022.Data
 {
@@ -25,7 +24,13 @@ namespace Projet_2022.Data
 
             #region  Order
             builder.Entity<Order>().HasOne(p => p.Product).WithMany(p => p.Orders).HasForeignKey(o => o.IdProduct);
-            builder.Entity<Order>().HasOne(p => p.User).WithMany(p => p.Orders).HasForeignKey(o => o.IdUser);
+            builder.Entity<Order>().HasOne(o => o.Cart).WithMany(c => c.Orders).HasForeignKey(o => o.IdCart);
+
+            #endregion
+
+            #region Cart
+            builder.Entity<Cart>().HasOne(p => p.User).WithMany(p => p.Carts).HasForeignKey(o => o.IdUser);
+
             #endregion
 
             #region  productgalleryimage
@@ -61,5 +66,6 @@ namespace Projet_2022.Data
         public DbSet<Tag> Tags { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<ProductTag> ProductsTags { get; set; }
+        public DbSet<Cart> Carts { get; set; }
     }
 }

@@ -44,12 +44,12 @@
 				<div class="span9">
 					<ul class="thumbnails listing-products">
 						@foreach (var item in Model)
-						{
+						{	
 							<li class="span3">
 								<div class="product-box">
 									<span class="sale_tag"></span>
-									<a href="product_detail.html"><img alt="" src="~/themes/images/ladies/9.jpg"></a><br />
-									<a href="product_detail.html" class="title">Fusce id molestie massa</a><br />
+									<a asp-controller="Product" asp-action="ProductDetail" asp-route-id=@item.Id><img src=@item.Principale_image style="height:270px;width:270px"></a><br />
+									<a asp-controller="Product" asp-action="ProductDetail" asp-route-id=@item.Id class="title">@item.Name</a><br />
 									<a href="#" class="category">@item.Name</a>
 									<p class="price">$341</p>
 								</div>

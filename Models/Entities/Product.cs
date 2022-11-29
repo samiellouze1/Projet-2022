@@ -29,9 +29,9 @@ namespace Projet_2022.Models.Entities
         [Required]
         public float Ratings { get; set; }
         [Required]
-        public float MinPrice { get; set; }
+        public int MinPrice { get; set; }
         [Required]
-        public float MaxPrice { get; set; }
+        public int MaxPrice { get; set; }
 
         [Required]
         public DateTime AddedAt { get; set; }

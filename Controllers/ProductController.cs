@@ -15,13 +15,15 @@ namespace Projet_2022.Controllers
         {
             return View();
         }
-        public IActionResult ProductDetail()
+        public async Task<IActionResult> ProductDetail(string id)
         {
-            return View();
+            var product=await _service.GetByIdAsync(id);
+            return View(product);
         }
-        public IActionResult AllProducts()
+        public async Task<IActionResult> AllProducts()
         {
-            return View();
+            var products = await _service.GetAllAsync();
+            return View(products);
         }
     }
 }

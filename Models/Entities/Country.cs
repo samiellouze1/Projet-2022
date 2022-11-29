@@ -12,6 +12,7 @@ namespace Projet_2022.Models.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
         public string Id { get; set; }
-        public virtual List<Employee> Employees { get; set; }
+        [Required]
+        public string Name { get; set; }    
     }
 }

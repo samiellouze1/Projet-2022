@@ -22,16 +22,16 @@ namespace Projet_2022.Models.Entities
         [Required]
         public string Slug { get; set; }
         [Required]
-        public string Principale_image { get; set; }
+        public string PrincipalImage { get; set; }
         [Required]
         public string Description { get; set; }
 
         [Required]
         public float Ratings { get; set; }
         [Required]
-        public int MinPrice { get; set; }
+        public float MinPrice { get; set; }
         [Required]
-        public int MaxPrice { get; set; }
+        public float MaxPrice { get; set; }
 
         [Required]
         public DateTime AddedAt { get; set; }
@@ -57,6 +57,7 @@ namespace Projet_2022.Models.Entities
         public virtual List<ProductTag> ProductTags { get; set;}
         public virtual List<ProductGalleryImage> ProductGalleryImages { get; set; }
         public virtual List<Order> Orders { get; set; }
+        public virtual List<ProductOption> ProductOptions { get; set; }
 
     }
 }

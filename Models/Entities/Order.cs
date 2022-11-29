@@ -15,23 +15,28 @@ namespace Projet_2022.Models.Entities
         [Required]
         public int Amount { get; set; }
         [Required]
-        public string Ship_address { get; set; }
+        public string ShipAddress { get; set; }
         [Required]
         public string City { get; set; }
         [Required]
-        public string Zip_code { get; set; }
+        public string ZipCode { get; set; }
         [Required]
-        public string Tax { get; set; }
+        public float Tax { get; set; }
         [Required]
-        public string Shipped { get; set; }
+        public int Shipped { get; set; }
         [Required]
-        public int Tracking_number { get; set; }
+        public int TrackingNumber { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+
         [Required]
-        public DateTime Date_of_order { get; set; }
+        public DateTime DateOfOrder { get; set; }
         public string IdProduct { get; set; }
         [ForeignKey("IdProduct")]
         public virtual Product Product { get; set; }
-        public virtual List<Coupon> Coupons { get; set; }
+        public string IdCoupon { get; set; }
+        [ForeignKey("IdCoupon")]
+        public virtual Coupon Coupon { get; set; }
 
         [Required]
         public string IdCart { get; set; }

@@ -16,7 +16,7 @@ namespace Projet_2022.Data.CartData
 		{
 			return Orders ?? (Orders = _context.Orders.Where(n => n.IdCart == IdCart).Include(n => n.Product).ToList());
 		}
-		public int GetTotal()
+		public float GetTotal()
 		{
 			var total = GetOrders().Select(n=>n.Product.MaxPrice*n.Amount).Sum();
 			return total;

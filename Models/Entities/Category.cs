@@ -20,6 +20,17 @@ namespace Projet_2022.Models.Entities
         public string Description { get; set; }
         [Required]
         public string Image { get; set; }
+        [Required]
+        public DateTime AddedAt { get; set; }
+        [Required]
+        public DateTime UpdatedAt { get; set; }
+        [Required]
+        public DateTime DeletedAt { get; set; }
+        public string IdParentCategory { get; set; }
+        [ForeignKey("IdParentCategory")]
+        public Category ParentCategory { get; set; }
         public virtual List<Product> Products { get; set; } 
+        public virtual List<Category> Categories { get; set; }
+
     }
 }

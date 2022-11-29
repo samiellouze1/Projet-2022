@@ -1,20 +1,21 @@
 ﻿using Projet_2022.Data.Repository;
-using Projet_2022.Models.Assoc;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Projet_2022.Models.Entities
 {
-    public class Cart:IEntityBase
-	{
+    public class OptionGroup:IEntityBase
+    {
         [Key]
         [Required]
         [ScaffoldColumn(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
         public string Id { get; set; }
-        public virtual List<OrderDetails> OrderDetailss { get; set; }
-        public string IdUser { get; set; }
-        [ForeignKey("IdUser")]
-        public virtual User User { get; set; }
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public string Description { get; set; }
+        public virtual List<Option> Options { get; set; }
     }
 }

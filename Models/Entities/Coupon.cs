@@ -19,11 +19,11 @@ namespace Projet_2022.Models.Entities
         [Required]
         public bool Active { get; set; }
         [Required]
-        public string Value { get; set; }
+        public float Value { get; set; }
         [Required]
-        public DateTime Startdate { get; set; }
+        public DateTime StartDate { get; set; }
         [Required]
-        public DateTime Enddate { get; set; }
+        public DateTime EndDate { get; set; }
         public string IdOrder { get; set; }
         [ForeignKey("IdOrder")]
         public virtual Order Order {get;set;}

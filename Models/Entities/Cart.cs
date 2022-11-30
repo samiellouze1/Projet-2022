@@ -12,7 +12,7 @@ namespace Projet_2022.Models.Entities
         [ScaffoldColumn(false)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
-        public virtual List<OrderDetails> OrderDetailss { get; set; }
+        public virtual List<OrderCart> OrdersCart { get; set; }
         public string IdUser { get; set; }
         [ForeignKey("IdUser")]
         public virtual User User { get; set; }

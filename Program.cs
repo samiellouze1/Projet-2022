@@ -20,8 +20,6 @@ builder.Services.AddScoped<IBrandService,BrandService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<ICouponService, CouponService>();
-builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IProductGalleryImageService, ProductGalleryImageService>();
 builder.Services.AddScoped<IProductService, ProductService>();
@@ -63,7 +61,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Product}/{action=AllProducts}/{id?}");
-AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
+//AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
 AppDbInitializer.Seed(app);
 
 app.Run();

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Projet_2022.Data.Repository;
+using Projet_2022.Models.Assoc;
 
 namespace Projet_2022.Models.Entities
 {
@@ -42,5 +43,6 @@ namespace Projet_2022.Models.Entities
         public string IdCart { get; set; }
         [ForeignKey("IdCart")]
         public virtual Cart Cart { get; set; }
+        public virtual List<OrderCart> OrderCarts { get; set; }
     }
 }

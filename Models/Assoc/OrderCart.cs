@@ -1,14 +1,14 @@
-﻿using Microsoft.Build.Framework;
+﻿
 using Projet_2022.Data.Repository;
 using Projet_2022.Models.Entities;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Projet_2022.Models.Assoc
 {
-    public class OrderDetails
+    public class OrderCart
     {
-        [Required]
-        public int Amount { get; set; }
+
         [Required]
         public string IdOrder { get; set; }
         [ForeignKey("IdOrder")]
@@ -16,6 +16,6 @@ namespace Projet_2022.Models.Assoc
         [Required]
         public string IdCart { get; set; }
         [ForeignKey("IdCart")]
-        public Cart Cart { get; set; }
+        public virtual Cart Cart { get; set; }
     }
 }

@@ -15,6 +15,5 @@ namespace Projet_2022.Models.Assoc
         public string IdOption { get; set; }
         [ForeignKey("IdOption")]
         public virtual Option Option { get; set; }
-        public virtual List<GalleryProductOption> GalleryProductOptions { get; set; }
     }
 }

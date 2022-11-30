@@ -4,7 +4,7 @@
 
 namespace Projet_2022.Migrations
 {
-    public partial class Cartsfixedfixed : Migration
+    public partial class niwniw : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -116,6 +116,15 @@ namespace Projet_2022.Data
                     }}) ;
                     context.SaveChanges();
                 }
+                if (!context.Carts.Any())
+                {
+                    context.Carts.AddRange(
+                        new Cart()
+                        {
+                            Id="1",
+                            IdUser="1"
+                        });
+                }
                 if (!context.Orders.Any())
                 {
                     Console.WriteLine("niwniw");
@@ -133,6 +142,9 @@ namespace Projet_2022.Data
                             TrackingNumber=33,
                             DateOfOrder=DateTime.Now,
                             IdProduct="1",
+                            Email="Order1@order.com",
+                            IdCart="1",
+                            Phone="123"
                         },
                         new Order()
                         {
@@ -146,6 +158,10 @@ namespace Projet_2022.Data
                             TrackingNumber=34,
                             DateOfOrder=DateTime.Now,
                             IdProduct="2",
+                            Email="Order1@order.com",
+                            IdCart="1",
+                            Phone ="123"
+
                         }
                     });
                     context.SaveChanges();
@@ -172,9 +188,10 @@ namespace Projet_2022.Data
                 #region user1
                 string user1Email = "user1@p22.com";
 
-                var user1= await userManager.FindByIdAsync(user1Email);
+                var user1= await userManager.FindByEmailAsync(user1Email);
                 if (user1 == null)
                 {
+                    Console.WriteLine("ziwziw");
                     var newUser1 = new User()
                     {
                         Id = "1",
@@ -185,6 +202,8 @@ namespace Projet_2022.Data
                         Zipcode = "User1Zipcode",
                         EmailVerification = false,
                         Phone = "12345678",
+                        UserName = user1Email,
+                        Address="Moghrib"
                     };
                     await userManager.CreateAsync(newUser1,"User1123@");
                     await userManager.AddToRoleAsync(newUser1, UserRoles.Client);

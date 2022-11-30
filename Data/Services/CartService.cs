@@ -4,9 +4,9 @@ using Projet_2022.Data.Repository;
 
 namespace Projet_2022.Data.Services
 {
-    public class JobService : EntityBaseRepository<Job>,IJobService
+    public class CartService : EntityBaseRepository<Cart>,ICartService
     {
-        public JobService(AppDbContext context): base(context)
+        public CartService(AppDbContext context): base(context)
         {
 
         }

@@ -4,9 +4,9 @@ using Projet_2022.Data.Repository;
 
 namespace Projet_2022.Data.Services
 {
-    public class EmployeeService : EntityBaseRepository<Employee>,IEmployeeService
+    public class OptionGroupService : EntityBaseRepository<OptionGroup>,IOptionGroupService
     {
-        public EmployeeService(AppDbContext context): base(context)
+        public OptionGroupService(AppDbContext context): base(context)
         {
 
         }

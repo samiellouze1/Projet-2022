@@ -28,7 +28,7 @@ namespace Projet_2022.Models.Entities
         public DateTime DeletedAt { get; set; }
         public string IdParentCategory { get; set; }
         [ForeignKey("IdParentCategory")]
-        public Category ParentCategory { get; set; }
+        public virtual Category ParentCategory { get; set; }
         public virtual List<Product> Products { get; set; } 
         public virtual List<Category> Categories { get; set; }
 

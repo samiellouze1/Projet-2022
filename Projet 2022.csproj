@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="Models\Associations\" />
-    <Folder Include="Views\Order\" />
   </ItemGroup>
 
 </Project>

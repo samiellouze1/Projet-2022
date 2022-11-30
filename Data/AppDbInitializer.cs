@@ -85,7 +85,7 @@ namespace Projet_2022.Data
                         PrincipalImage="data:image/jpeg;base64,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",
                         Ratings=10,
                         MinPrice=0,
-                        MaxPrice=1,
+                        MaxPrice=2,
                         AddedAt=DateTime.Now,
                         UpdatedAt=DateTime.Now,
                         DeletedAt=DateTime.Now,
@@ -105,7 +105,7 @@ namespace Projet_2022.Data
                         Description="Product3Description",
                         Ratings=10,
                         MinPrice=0,
-                        MaxPrice=1,
+                        MaxPrice=2,
                         AddedAt=DateTime.Now,
                         UpdatedAt=DateTime.Now,
                         DeletedAt=DateTime.Now,
@@ -116,7 +116,25 @@ namespace Projet_2022.Data
                     }}) ;
                     context.SaveChanges();
                 }
-
+                if (!context.OrderItems.Any())
+                {
+                    context.OrderItems.AddRange(
+                    new OrderItem(){
+                        Id="1",
+                        Amount=3,
+                        Price=3,
+                        IdProduct="1",
+                        IdOrder="1",
+                    },
+                    new OrderItem()
+                    {
+                        Id="2",
+                        Amount=4,
+                        Price=8,
+                        IdProduct="2",
+                        IdOrder="1"
+                    });
+                }
                 if (!context.Orders.Any())
                 {
                     Console.WriteLine("niwniw");
@@ -125,7 +143,6 @@ namespace Projet_2022.Data
                         new Order()
                         {
                             Id="1",
-
                             ShipAddress="moghrib",
                             City="Oran",
                             ZipCode="3000",
@@ -133,7 +150,6 @@ namespace Projet_2022.Data
                             Shipped=0,
                             TrackingNumber=33,
                             DateOfOrder=DateTime.Now,
-
                             Email="Order1@order.com",
                             Phone="123"
                         },
@@ -148,9 +164,7 @@ namespace Projet_2022.Data
                             Shipped=0,
                             TrackingNumber=34,
                             DateOfOrder=DateTime.Now,
-
                             Email="Order1@order.com",
-
                             Phone ="123"
 
                         }

@@ -4,7 +4,7 @@ using Projet_2022.Data.Repository;
 
 namespace Projet_2022.Data.Services
 {
-    public class OrderItemService : EntityBaseRepository<Brand>,IOrderItemService
+    public class OrderItemService : EntityBaseRepository<OrderItem>,IOrderItemService
     {
         public OrderItemService(AppDbContext context): base(context)
         {

@@ -59,5 +59,11 @@ namespace Projet_2022.Data.Cart
             var total = _context.CartItems.Where(n => n.IdCart == IdCart).Select(n => n.Product.MaxPrice * n.Amount).Sum();
             return total;
         }
+        public async Task CLearCartAsync()
+        {
+            var items = await _context.CartItems.Where(n => n.IdCart == IdCart).ToListAsync();
+            _context.RemoveRange(items);
+            await _context.SaveChangesAsync();
+        }
     }
 }

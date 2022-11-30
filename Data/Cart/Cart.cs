@@ -54,7 +54,7 @@ namespace Projet_2022.Data.Cart
         {
             return CartItems ?? (CartItems = _context.CartItems.Where(n => n.IdCart == IdCart).Include(n => n.Product).ToList());
         }
-        public float GetShoppingCartTotal()
+        public float GetCartTotal()
         {
             var total = _context.CartItems.Where(n => n.IdCart == IdCart).Select(n => n.Product.MaxPrice * n.Amount).Sum();
             return total;

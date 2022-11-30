@@ -64,6 +64,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Product}/{action=AllProducts}/{id?}");
 AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
-//AppDbInitializer.Seed(app);
+AppDbInitializer.Seed(app);
 
 app.Run();

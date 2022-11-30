@@ -5,8 +5,6 @@ using Projet_2022.Data;
 using Projet_2022.Data.Static;
 using Projet_2022.Models.Entities;
 using Projet_2022.Views.ViewModels;
-using System.Collections;
-using System.Security.Claims;
 
 namespace Projet_2022.Controllers
 {
@@ -45,7 +43,7 @@ namespace Projet_2022.Controllers
                     var result = await _signinmanager.PasswordSignInAsync(user, loginvm.Password, false, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("AllProducts", "Product");
                     }
                 }
             }
@@ -85,6 +83,9 @@ namespace Projet_2022.Controllers
                 City = registervm.City,
                 Zipcode = registervm.Zipcode,
                 Phone= registervm.Phone,
+                Address=registervm.Address,
+                EmailVerification=false
+
             };
             var newUserResponse = await _usermanager.CreateAsync(newUser, registervm.Password);
             if (newUserResponse.Succeeded)
@@ -93,7 +94,7 @@ namespace Projet_2022.Controllers
                 var result = await _signinmanager.PasswordSignInAsync(newUser, registervm.Password, false, false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("ÁllProducts", "Product");
                 }
             }
             return View(registervm);
@@ -102,7 +103,7 @@ namespace Projet_2022.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signinmanager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("AllProducts", "Product");
         }
         public async Task<IActionResult> MyOrders(string Id)
         {

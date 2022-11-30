@@ -29,6 +29,8 @@ namespace Projet_2022.Views.ViewModels
         public string Zipcode { get; set; }
         [Display(Name="Phone")]
         public string Phone { get; set; }
+        [Required]
+        public string Address { get; set; }
 
     }
 }

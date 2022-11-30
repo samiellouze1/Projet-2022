@@ -137,7 +137,6 @@ namespace Projet_2022.Data
                 }
                 if (!context.Orders.Any())
                 {
-                    Console.WriteLine("niwniw");
                     context.AddRange(new List<Order>
                     {
                         new Order()
@@ -151,7 +150,8 @@ namespace Projet_2022.Data
                             TrackingNumber=33,
                             DateOfOrder=DateTime.Now,
                             Email="Order1@order.com",
-                            Phone="123"
+                            Phone="123",
+                            IdUser="1"
                         },
                         new Order()
                         {
@@ -165,13 +165,13 @@ namespace Projet_2022.Data
                             TrackingNumber=34,
                             DateOfOrder=DateTime.Now,
                             Email="Order1@order.com",
-                            Phone ="123"
-
+                            Phone ="123",
+                            IdUser="1"
                         }
                     });
                     context.SaveChanges();
                 }
-                Console.WriteLine("kakiw");
+
             }
         }
         public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationbuilder)
@@ -196,13 +196,12 @@ namespace Projet_2022.Data
                 var user1= await userManager.FindByEmailAsync(user1Email);
                 if (user1 == null)
                 {
-                    Console.WriteLine("ziwziw");
                     var newUser1 = new User()
                     {
                         Id = "1",
                         FirstName = "User1FirstName",
                         LastName = "User1LastName",
-                        Email = "User1Email",
+                        Email = user1Email,
                         City = "User1City",
                         Zipcode = "User1Zipcode",
                         EmailVerification = false,

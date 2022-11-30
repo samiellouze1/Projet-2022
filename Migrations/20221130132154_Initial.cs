@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Projet_2022.Migrations
 {
-    public partial class Initialfixed : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -82,7 +82,7 @@ namespace Projet_2022.Migrations
                     AddedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IdParentCategory = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    IdParentCategory = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -255,24 +255,6 @@ namespace Projet_2022.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Carts",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    IdUser = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Carts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Carts_AspNetUsers_IdUser",
-                        column: x => x.IdUser,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -311,6 +293,39 @@ namespace Projet_2022.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ShipAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Tax = table.Column<float>(type: "real", nullable: false),
+                    Shipped = table.Column<int>(type: "int", nullable: false),
+                    TrackingNumber = table.Column<int>(type: "int", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateOfOrder = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IdUser = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IdCoupon = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_Coupons_IdCoupon",
+                        column: x => x.IdCoupon,
+                        principalTable: "Coupons",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Options",
                 columns: table => new
                 {
@@ -330,51 +345,22 @@ namespace Projet_2022.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "CartItems",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProductId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Amount = table.Column<int>(type: "int", nullable: false),
-                    ShipAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Tax = table.Column<float>(type: "real", nullable: false),
-                    Shipped = table.Column<int>(type: "int", nullable: false),
-                    TrackingNumber = table.Column<int>(type: "int", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateOfOrder = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IdProduct = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    IdCoupon = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    IdCart = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    IdCart = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.PrimaryKey("PK_CartItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Orders_Carts_IdCart",
-                        column: x => x.IdCart,
-                        principalTable: "Carts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Orders_Coupons_IdCoupon",
-                        column: x => x.IdCoupon,
-                        principalTable: "Coupons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Orders_Products_IdProduct",
-                        column: x => x.IdProduct,
+                        name: "FK_CartItems_Products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -419,6 +405,33 @@ namespace Projet_2022.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OrderItems",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Amount = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    IdProduct = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IdOrder = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Orders_IdOrder",
+                        column: x => x.IdOrder,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Products_IdProduct",
+                        column: x => x.IdProduct,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProductOption",
                 columns: table => new
                 {
@@ -437,28 +450,6 @@ namespace Projet_2022.Migrations
                         name: "FK_ProductOption_Products_IdProduct",
                         column: x => x.IdProduct,
                         principalTable: "Products",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OrderDetailss",
-                columns: table => new
-                {
-                    IdOrder = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    IdCart = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderDetailss", x => new { x.IdOrder, x.IdCart });
-                    table.ForeignKey(
-                        name: "FK_OrderDetailss_Carts_IdCart",
-                        column: x => x.IdCart,
-                        principalTable: "Carts",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_OrderDetailss_Orders_IdOrder",
-                        column: x => x.IdOrder,
-                        principalTable: "Orders",
                         principalColumn: "Id");
                 });
 
@@ -502,9 +493,9 @@ namespace Projet_2022.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Carts_IdUser",
-                table: "Carts",
-                column: "IdUser");
+                name: "IX_CartItems_ProductId",
+                table: "CartItems",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Categories_IdParentCategory",
@@ -517,14 +508,14 @@ namespace Projet_2022.Migrations
                 column: "IdOptionGroup");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderDetailss_IdCart",
-                table: "OrderDetailss",
-                column: "IdCart");
+                name: "IX_OrderItems_IdOrder",
+                table: "OrderItems",
+                column: "IdOrder");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_IdCart",
-                table: "Orders",
-                column: "IdCart");
+                name: "IX_OrderItems_IdProduct",
+                table: "OrderItems",
+                column: "IdProduct");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_IdCoupon",
@@ -532,14 +523,9 @@ namespace Projet_2022.Migrations
                 column: "IdCoupon");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_IdProduct",
+                name: "IX_Orders_IdUser",
                 table: "Orders",
-                column: "IdProduct");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_UserId",
-                table: "Orders",
-                column: "UserId");
+                column: "IdUser");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductGalleryImages_IdProduct",
@@ -585,10 +571,13 @@ namespace Projet_2022.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "CartItems");
+
+            migrationBuilder.DropTable(
                 name: "Countries");
 
             migrationBuilder.DropTable(
-                name: "OrderDetailss");
+                name: "OrderItems");
 
             migrationBuilder.DropTable(
                 name: "ProductGalleryImages");
@@ -609,22 +598,19 @@ namespace Projet_2022.Migrations
                 name: "Options");
 
             migrationBuilder.DropTable(
+                name: "Products");
+
+            migrationBuilder.DropTable(
                 name: "Tags");
 
             migrationBuilder.DropTable(
-                name: "Carts");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Coupons");
 
             migrationBuilder.DropTable(
-                name: "Products");
-
-            migrationBuilder.DropTable(
                 name: "OptionGroups");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Brands");

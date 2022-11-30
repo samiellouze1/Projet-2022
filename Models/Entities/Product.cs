@@ -56,7 +56,7 @@ namespace Projet_2022.Models.Entities
 
         public virtual List<ProductTag> ProductTags { get; set;}
         public virtual List<ProductGalleryImage> ProductGalleryImages { get; set; }
-        public virtual List<Order> Orders { get; set; }
+        public virtual List<OrderItem> OrderItems { get; set; }
         public virtual List<ProductOption> ProductOptions { get; set; }
 
     }

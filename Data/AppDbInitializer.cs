@@ -116,15 +116,7 @@ namespace Projet_2022.Data
                     }}) ;
                     context.SaveChanges();
                 }
-                if (!context.Carts.Any())
-                {
-                    context.Carts.AddRange(
-                        new Cart()
-                        {
-                            Id="1",
-                            IdUser="1"
-                        });
-                }
+
                 if (!context.Orders.Any())
                 {
                     Console.WriteLine("niwniw");
@@ -133,7 +125,7 @@ namespace Projet_2022.Data
                         new Order()
                         {
                             Id="1",
-                            Amount=3,
+
                             ShipAddress="moghrib",
                             City="Oran",
                             ZipCode="3000",
@@ -141,15 +133,14 @@ namespace Projet_2022.Data
                             Shipped=0,
                             TrackingNumber=33,
                             DateOfOrder=DateTime.Now,
-                            IdProduct="1",
+
                             Email="Order1@order.com",
-                            IdCart="1",
                             Phone="123"
                         },
                         new Order()
                         {
                             Id="2",
-                            Amount=4,
+
                             ShipAddress="moghrib",
                             City="Casablanca",
                             ZipCode="4000",
@@ -157,9 +148,9 @@ namespace Projet_2022.Data
                             Shipped=0,
                             TrackingNumber=34,
                             DateOfOrder=DateTime.Now,
-                            IdProduct="2",
+
                             Email="Order1@order.com",
-                            IdCart="1",
+
                             Phone ="123"
 
                         }

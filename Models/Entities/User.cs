@@ -26,6 +26,5 @@ namespace Projet_2022.Models.Entities
         [Required]
         public DateTime RegistrationDate { get; set; }
         public virtual List<Order> Orders { get; set; }
-        public virtual List<Cart> Carts { get; set; }
     }
 }

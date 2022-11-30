@@ -1,11 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Projet_2022.Data.Repository;
 using System.ComponentModel.DataAnnotations;
-using Projet_2022.Data.Repository;
-using Projet_2022.Models.Assoc;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Projet_2022.Models.Entities
 {
-    public class Order : IEntityBase
+    public class Order:IEntityBase
     {
         [Key]
         [Required]
@@ -13,8 +12,7 @@ namespace Projet_2022.Models.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
         public string Id { get; set; }
-        [Required]
-        public int Amount { get; set; }
+
         [Required]
         public string ShipAddress { get; set; }
         [Required]
@@ -32,17 +30,15 @@ namespace Projet_2022.Models.Entities
 
         [Required]
         public DateTime DateOfOrder { get; set; }
-        public string IdProduct { get; set; }
-        [ForeignKey("IdProduct")]
-        public virtual Product Product { get; set; }
+        [Required]
+        public string IdUser { get; set; }
+        [ForeignKey("IdUser")]
+        public virtual User User { get; set; }
         public string IdCoupon { get; set; }
         [ForeignKey("IdCoupon")]
         public virtual Coupon Coupon { get; set; }
+        public virtual List<OrderItem> OrderItems { get; set; }
 
-        [Required]
-        public string IdCart { get; set; }
-        [ForeignKey("IdCart")]
-        public virtual Cart Cart { get; set; }
-        public virtual List<OrderCart> OrderCarts { get; set; }
+
     }
 }

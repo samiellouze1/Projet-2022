@@ -155,21 +155,6 @@ namespace Projet_2022.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Projet_2022.Models.Assoc.OrderCart", b =>
-                {
-                    b.Property<string>("IdOrder")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("IdCart")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("IdOrder", "IdCart");
-
-                    b.HasIndex("IdCart");
-
-                    b.ToTable("OrderDetailss");
-                });
-
             modelBuilder.Entity("Projet_2022.Models.Assoc.ProductOption", b =>
                 {
                     b.Property<string>("IdProduct")
@@ -223,21 +208,27 @@ namespace Projet_2022.Migrations
                     b.ToTable("Brands");
                 });
 
-            modelBuilder.Entity("Projet_2022.Models.Entities.Cart", b =>
+            modelBuilder.Entity("Projet_2022.Models.Entities.CartItem", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("IdUser")
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IdCart")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdUser");
+                    b.HasIndex("ProductId");
 
-                    b.ToTable("Carts");
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("Projet_2022.Models.Entities.Category", b =>
@@ -372,9 +363,6 @@ namespace Projet_2022.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -386,14 +374,10 @@ namespace Projet_2022.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IdCart")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("IdCoupon")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("IdProduct")
+                    b.Property<string>("IdUser")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -414,24 +398,46 @@ namespace Projet_2022.Migrations
                     b.Property<int>("TrackingNumber")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("ZipCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdCart");
-
                     b.HasIndex("IdCoupon");
+
+                    b.HasIndex("IdUser");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Projet_2022.Models.Entities.OrderItem", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IdOrder")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("IdProduct")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdOrder");
 
                     b.HasIndex("IdProduct");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("Projet_2022.Models.Entities.Product", b =>
@@ -684,25 +690,6 @@ namespace Projet_2022.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Projet_2022.Models.Assoc.OrderCart", b =>
-                {
-                    b.HasOne("Projet_2022.Models.Entities.Cart", "Cart")
-                        .WithMany("OrdersCart")
-                        .HasForeignKey("IdCart")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Projet_2022.Models.Entities.Order", "Order")
-                        .WithMany("OrderCarts")
-                        .HasForeignKey("IdOrder")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Cart");
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("Projet_2022.Models.Assoc.ProductOption", b =>
                 {
                     b.HasOne("Projet_2022.Models.Entities.Option", "Option")
@@ -741,15 +728,13 @@ namespace Projet_2022.Migrations
                     b.Navigation("Tag");
                 });
 
-            modelBuilder.Entity("Projet_2022.Models.Entities.Cart", b =>
+            modelBuilder.Entity("Projet_2022.Models.Entities.CartItem", b =>
                 {
-                    b.HasOne("Projet_2022.Models.Entities.User", "User")
-                        .WithMany("Carts")
-                        .HasForeignKey("IdUser")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Projet_2022.Models.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
 
-                    b.Navigation("User");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Projet_2022.Models.Entities.Category", b =>
@@ -774,29 +759,36 @@ namespace Projet_2022.Migrations
 
             modelBuilder.Entity("Projet_2022.Models.Entities.Order", b =>
                 {
-                    b.HasOne("Projet_2022.Models.Entities.Cart", "Cart")
-                        .WithMany()
-                        .HasForeignKey("IdCart")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Projet_2022.Models.Entities.Coupon", "Coupon")
                         .WithMany("Orders")
                         .HasForeignKey("IdCoupon");
 
-                    b.HasOne("Projet_2022.Models.Entities.Product", "Product")
+                    b.HasOne("Projet_2022.Models.Entities.User", "User")
                         .WithMany("Orders")
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Coupon");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Projet_2022.Models.Entities.OrderItem", b =>
+                {
+                    b.HasOne("Projet_2022.Models.Entities.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("IdOrder")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Projet_2022.Models.Entities.Product", "Product")
+                        .WithMany("OrderItems")
                         .HasForeignKey("IdProduct")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Projet_2022.Models.Entities.User", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Cart");
-
-                    b.Navigation("Coupon");
+                    b.Navigation("Order");
 
                     b.Navigation("Product");
                 });
@@ -836,11 +828,6 @@ namespace Projet_2022.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Projet_2022.Models.Entities.Cart", b =>
-                {
-                    b.Navigation("OrdersCart");
-                });
-
             modelBuilder.Entity("Projet_2022.Models.Entities.Category", b =>
                 {
                     b.Navigation("Categories");
@@ -865,12 +852,12 @@ namespace Projet_2022.Migrations
 
             modelBuilder.Entity("Projet_2022.Models.Entities.Order", b =>
                 {
-                    b.Navigation("OrderCarts");
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("Projet_2022.Models.Entities.Product", b =>
                 {
-                    b.Navigation("Orders");
+                    b.Navigation("OrderItems");
 
                     b.Navigation("ProductGalleryImages");
 
@@ -886,8 +873,6 @@ namespace Projet_2022.Migrations
 
             modelBuilder.Entity("Projet_2022.Models.Entities.User", b =>
                 {
-                    b.Navigation("Carts");
-
                     b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618

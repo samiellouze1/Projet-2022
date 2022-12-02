@@ -16,21 +16,25 @@ namespace Projet_2022.Controllers
             _brandService = brandService;
             _categoryService = categoryService;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
         public async Task<IActionResult> ProductDetail(string id)
         {
             var product=await _service.GetByIdAsync(id);
-            return View(product);
+            var categories = await _categoryService.GetAllAsync();
+            var brands= await _brandService.GetAllAsync();
+            var productcategoriesbrands = new ProductCategoriesBrands()
+            {
+                Product = product,
+                Brands = brands,
+                Categories = categories
+            };
+            return View(productcategoriesbrands);
         }
-        public async Task<IActionResult> AllProducts()
+        public async Task<IActionResult> Index()
         {
             var products = await _service.GetAllAsync();
             var categories =await _categoryService.GetAllAsync();
             var brands = await _brandService.GetAllAsync();
-            var productscategoriesbrands = new ProductBrandCategoryVM() { Brands = brands, Products = products, Categories = categories };
+            var productscategoriesbrands = new ProductsBrandsCategoriesVM() { Brands = brands, Products = products, Categories = categories };
             return View(productscategoriesbrands);
         }
     }

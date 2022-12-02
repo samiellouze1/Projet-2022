@@ -31,6 +31,14 @@ namespace Projet_2022.Data.Cart
                 cartitem.Amount ++;
             }
         }
+        public static Cart GetCart(IServiceProvider services)
+        {
+            ISession session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
+            var context = services.GetService<AppDbContext>();
+            string CartId=session.GetString("CartId") ?? Guid.NewGuid().ToString();
+            session.SetString("CartId", CartId);
+            return new Cart(context) {IdCart=CartId};
+        }
         public void RemoveItemFromCart(Product Product)
         {
             var cartitem = _context.CartItems.FirstOrDefault(n => n.Product.Id == Product.Id && n.IdCart == IdCart);
@@ -56,10 +64,10 @@ namespace Projet_2022.Data.Cart
         }
         public float GetCartTotal()
         {
-            var total = _context.CartItems.Where(n => n.IdCart == IdCart).Select(n => n.Product.MaxPrice * n.Amount).Sum();
+            var total = _context.CartItems.Where(n => n.IdCart == IdCart).Select(n => n.Product.Price * n.Amount).Sum();
             return total;
         }
-        public async Task CLearCartAsync()
+        public async Task ClearCartAsync()
         {
             var items = await _context.CartItems.Where(n => n.IdCart == IdCart).ToListAsync();
             _context.RemoveRange(items);

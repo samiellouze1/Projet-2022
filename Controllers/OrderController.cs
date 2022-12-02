@@ -1,27 +1,41 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Projet_2022.Data.Cart;
 using Projet_2022.Data.IServices;
+using Projet_2022.Data.Services;
 using Projet_2022.Models.Entities;
 using Projet_2022.Models.ViewModels;
 using System.Linq;
+using System.Security.Claims;
 
 namespace Projet_2022.Controllers
 {
-    public class OrderController : Controller
+    public class OrdersController : Controller
     {
         private readonly IProductService _productService;
         private readonly Cart _cart;
+        private readonly IOrderService _orderService;
 
-        public OrderController(IProductService productService,Cart cart )
+        public OrdersController(IProductService moviesService, Cart cart, IOrderService ordersService)
         {
-            _productService = productService;
-            _cart= cart;    
-
+            _productService = moviesService;
+            _cart = cart;
+            _orderService = ordersService;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userRole = User.FindFirstValue(ClaimTypes.Role);
+
+            var orders = await _orderService.GetOrdersByUserIdAndRoleAsync(userId, userRole);
+            return View(orders);
+        }
+
+        public IActionResult ShoppingCart()
         {
             var items = _cart.GetCartItems();
             _cart.CartItems = items;
+
             var response = new CartVM()
             {
                 Cart = _cart,
@@ -30,6 +44,39 @@ namespace Projet_2022.Controllers
 
             return View(response);
         }
-        
+
+        public async Task<IActionResult> AddItemToShoppingCart(string id)
+        {
+            var item = await _productService.GetByIdAsync(id);
+
+            if (item != null)
+            {
+                _cart.AddItemToCart(item);
+            }
+            return RedirectToAction(nameof(ShoppingCart));
+        }
+
+        public async Task<IActionResult> RemoveItemFromShoppingCart(string id)
+        {
+            var item = await _productService.GetByIdAsync(id);
+
+            if (item != null)
+            {
+                _cart.RemoveItemFromCart(item);
+            }
+            return RedirectToAction(nameof(ShoppingCart));
+        }
+
+        public async Task<IActionResult> CompleteOrder()
+        {
+            var items = _cart.GetCartItems();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userEmailAddress = User.FindFirstValue(ClaimTypes.Email);
+
+            await _orderService.StoreOrderAsync(items, userId, userEmailAddress);
+            await _cart.ClearCartAsync();
+
+            return View("OrderCompleted");
+        }
     }
 }

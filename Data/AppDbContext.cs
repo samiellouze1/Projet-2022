@@ -61,6 +61,7 @@ namespace Projet_2022.Data
             #region Category
             builder.Entity<Category>().HasMany(c => c.Categories).WithOne(c => c.ParentCategory).HasForeignKey(c=>c.IdParentCategory).IsRequired(false);
             #endregion
+
             base.OnModelCreating(builder);
 
 

@@ -2,7 +2,7 @@
 
 namespace Projet_2022.Models.ViewModels
 {
-    public class ProductBrandCategoryVM
+    public class ProductsBrandsCategoriesVM
     {
         public IEnumerable<Product> Products { get; set; }
         public IEnumerable<Brand> Brands { get; set; }

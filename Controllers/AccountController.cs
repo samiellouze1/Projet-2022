@@ -34,7 +34,7 @@ namespace Projet_2022.Controllers
             {
                 return (View(loginvm));
             }
-            var user = await _usermanager.FindByNameAsync(loginvm.Email);
+            var user = await _usermanager.FindByEmailAsync(loginvm.Email);
             if (user != null)
             {
                 var passwordCheck = await _usermanager.CheckPasswordAsync(user, loginvm.Password);
@@ -43,7 +43,7 @@ namespace Projet_2022.Controllers
                     var result = await _signinmanager.PasswordSignInAsync(user, loginvm.Password, false, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("AllProducts", "Product");
+                        return RedirectToAction("Index", "Product");
                     }
                 }
             }
@@ -94,7 +94,7 @@ namespace Projet_2022.Controllers
                 var result = await _signinmanager.PasswordSignInAsync(newUser, registervm.Password, false, false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("ÁllProducts", "Product");
+                    return RedirectToAction("Index", "Product");
                 }
             }
             return View(registervm);
@@ -102,8 +102,9 @@ namespace Projet_2022.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
+            Console.WriteLine("zebbi");
             await _signinmanager.SignOutAsync();
-            return RedirectToAction("AllProducts", "Product");
+            return RedirectToAction("Index", "Product");
         }
         public async Task<IActionResult> MyOrders(string Id)
         {

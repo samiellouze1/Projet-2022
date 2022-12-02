@@ -5,5 +5,7 @@ namespace Projet_2022.Data.IServices
 {
     public interface IOrderService:IEntityBaseRepository<Order>
     {
+        Task StoreOrderAsync(List<CartItem> items, string userId, string userEmailAddress);
+        Task<List<Order>> GetOrdersByUserIdAndRoleAsync(string userId, string userRole);
     }
 }

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Projet_2022.Data;
+using Projet_2022.Data.Cart;
 using Projet_2022.Data.Extensions;
 using Projet_2022.Data.IServices;
 using Projet_2022.Data.Services;
@@ -11,7 +12,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMvc().AddRazorRuntimeCompilation();
 builder.Services.AddDbContext<AppDbContext>(option => option.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Add services to the container.
-builder.Services.AddControllersWithViews();
 
 
 
@@ -27,7 +27,14 @@ builder.Services.AddScoped<IProductGalleryImageService, ProductGalleryImageServi
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped(c => Cart.GetCart(c));
+builder.Services.AddSession();
+
 #endregion
+
+builder.Services.AddControllersWithViews();
+
 
 #region Claims
 builder.Services.AddScoped<IUserClaimsPrincipalFactory<User>, ApplicationUserClaimsPrincipalFactory>();
@@ -62,7 +69,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Product}/{action=AllProducts}/{id?}");
+    pattern: "{controller=Product}/{action=Index}/{id?}");
 AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
 AppDbInitializer.Seed(app);
 

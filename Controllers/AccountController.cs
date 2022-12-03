@@ -117,7 +117,7 @@ namespace Projet_2022.Controllers
 
             return View(user);
         }
-        public async IActionResult Conge()
+        public  IActionResult Conge()
         {
             return View();
         }

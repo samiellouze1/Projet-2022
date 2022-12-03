@@ -2,9 +2,10 @@
 
 namespace Projet_2022.Models.ViewModels
 {
-    public class BrandCategoriesVM
+    public class BrandBrandsCategoriesVM
     {
         public Brand Brand;
+        public IEnumerable<Brand> Brands;
         public IEnumerable<Category> Categories;
 
     }

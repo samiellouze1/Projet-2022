@@ -21,12 +21,14 @@ namespace Projet_2022.Controllers
             var brandscategories = new BrandsCategoriesVM() { Brands=brands,Categories=categories};
             return View(brandscategories);
         }
-        public async Task<IActionResult> Category(string id)
+        public async Task<IActionResult> Brand(string id)
         {
             var brand = await _brandservice.GetByIdAsync(id);
             var categories = await _categoryservice.GetAllAsync();
-            var brandcategories = new BrandCategoriesVM() { Brand = brand, Categories = categories };
-            return View(brand);
+            var brands = await _brandservice.GetAllAsync();
+            var brandcategories = new BrandBrandsCategoriesVM() { Brand = brand, Categories = categories, Brands=brands };
+            
+            return View(brandcategories);
         }
     }
 }

@@ -37,7 +37,6 @@ builder.Services.AddControllersWithViews();
 
 
 #region Claims
-builder.Services.AddScoped<IUserClaimsPrincipalFactory<User>, ApplicationUserClaimsPrincipalFactory>();
 #endregion
 
 

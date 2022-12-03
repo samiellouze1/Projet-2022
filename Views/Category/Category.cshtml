@@ -1,15 +1,15 @@
 ﻿@using Projet_2022.Models.ViewModels
 
 @{
-	ViewData["Title"]="All Products";
+	ViewData["Title"] = "All Products for this category";
 }
-@model ProductsBrandsCategoriesVM;
+@model CategoryCategoriesBrandsVM;
 
 <section class="navbar main-menu">
 	<div class="navbar-inner main-menu">
 		<nav id="menu" class="pull-right">
 			<ul>
-				@foreach(var item in Model.Categories)
+				@foreach (var item in Model.Categories)
 				{
 					<li><a asp-action="Category" asp-controller="Category" asp-route-id=@item.Id>@item.Name</a></li>
 				}
@@ -19,15 +19,15 @@
 </section>
 <section class="header_text sub">
 	<img class="pageBanner" src="~/themes/images/pageBanner.png" alt="New products">
-	<h4><span>All products</span></h4>
+	<h4><span>All products for Category @Model.Category.Name</span></h4>
 </section>
 <section class="main-content">
 
 	<div class="row">
 		<div class="span9">
 			<ul class="thumbnails listing-products">
-				@foreach (var item in Model.Products)
-				{	
+				@foreach (var item in Model.Category.Products)
+				{
 					<li class="span3">
 						<div class="product-box">
 							<span class="sale_tag"></span>

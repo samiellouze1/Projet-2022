@@ -14,7 +14,6 @@ namespace Projet_2022.Data
             {
                 var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
                 context.Database.EnsureCreated();
-                Console.WriteLine("piwpiw");
                 if (!context.Brands.Any())
                 {
                     context.Brands.AddRange(new List<Brand>()

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Projet_2022.Data;
 using Projet_2022.Data.Static;
 using Projet_2022.Models.Entities;
 using Projet_2022.Views.ViewModels;
+using System.Security.Claims;
 
 namespace Projet_2022.Controllers
 {
@@ -15,7 +17,8 @@ namespace Projet_2022.Controllers
         private readonly AppDbContext _context;
         public AccountController(UserManager<User> usermanager,
             SignInManager<User> signinmanager,
-            AppDbContext context)
+            AppDbContext context
+            )
         {
             _usermanager = usermanager;
             _signinmanager = signinmanager;
@@ -50,10 +53,6 @@ namespace Projet_2022.Controllers
             TempData["Error"] = "Wrong! Try Again";
             return View(loginvm);
         }
-        public IActionResult ClientLogin()
-        {
-            return View();
-        }
         public IActionResult Register()
         {
             var response = new RegisterVM();
@@ -67,7 +66,7 @@ namespace Projet_2022.Controllers
             {
                 return View(registervm);
             }
-            Console.WriteLine(registervm.FirstName);
+
             var user = await _usermanager.FindByEmailAsync(registervm.Email);
             if (user != null)
             {
@@ -105,10 +104,22 @@ namespace Projet_2022.Controllers
             await _signinmanager.SignOutAsync();
             return RedirectToAction("Index", "Product");
         }
-        public IActionResult MyAccount()
+        public async Task<IActionResult> Delete()
         {
-            var user=_usermanager.GetUserAsync(HttpContext.User);
+            await _signinmanager.SignOutAsync();
+            var user= await _usermanager.GetUserAsync(User);
+            await _usermanager.DeleteAsync(user);
+            return RedirectToAction("Index", "Product");
+        }
+        public async Task<IActionResult> MyAccount()
+        {
+            var user =await _usermanager.GetUserAsync(User);
+
             return View(user);
+        }
+        public async IActionResult Conge()
+        {
+            return View();
         }
 
     }

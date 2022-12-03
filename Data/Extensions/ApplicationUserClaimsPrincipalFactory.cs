@@ -16,8 +16,7 @@ namespace Projet_2022.Data.Extensions
         protected override async Task<ClaimsIdentity> GenerateClaimsAsync(User user)
         {
             var identity = await base.GenerateClaimsAsync(user);
-            identity.AddClaim(new Claim("FirstName", user.FirstName ?? ""));
-            identity.AddClaim(new Claim("LastName", user.LastName ?? ""));
+            identity.AddClaim(new Claim("Name", user.FirstName ?? ""));
             identity.AddClaim(new Claim("Email", user.Email ?? ""));
             identity.AddClaim(new Claim("City", user.City ?? ""));
             identity.AddClaim(new Claim("Zipcode", user.Zipcode ?? ""));

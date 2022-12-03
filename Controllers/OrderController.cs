@@ -9,13 +9,13 @@ using System.Security.Claims;
 
 namespace Projet_2022.Controllers
 {
-    public class OrdersController : Controller
+    public class OrderController : Controller
     {
         private readonly IProductService _productService;
         private readonly Cart _cart;
         private readonly IOrderService _orderService;
 
-        public OrdersController(IProductService moviesService, Cart cart, IOrderService ordersService)
+        public OrderController(IProductService moviesService, Cart cart, IOrderService ordersService)
         {
             _productService = moviesService;
             _cart = cart;
@@ -31,7 +31,7 @@ namespace Projet_2022.Controllers
             return View(orders);
         }
 
-        public IActionResult ShoppingCart()
+        public IActionResult Cart()
         {
             var items = _cart.GetCartItems();
             _cart.CartItems = items;
@@ -45,7 +45,7 @@ namespace Projet_2022.Controllers
             return View(response);
         }
 
-        public async Task<IActionResult> AddItemToShoppingCart(string id)
+        public async Task<IActionResult> AddToCart(string id)
         {
             var item = await _productService.GetByIdAsync(id);
 
@@ -53,10 +53,11 @@ namespace Projet_2022.Controllers
             {
                 _cart.AddItemToCart(item);
             }
-            return RedirectToAction(nameof(ShoppingCart));
+            return RedirectToAction(nameof(Cart));
         }
 
-        public async Task<IActionResult> RemoveItemFromShoppingCart(string id)
+
+        public async Task<IActionResult> RemoveItemFromCart(string id)
         {
             var item = await _productService.GetByIdAsync(id);
 
@@ -64,7 +65,7 @@ namespace Projet_2022.Controllers
             {
                 _cart.RemoveItemFromCart(item);
             }
-            return RedirectToAction(nameof(ShoppingCart));
+            return RedirectToAction(nameof(Cart));
         }
 
         public async Task<IActionResult> CompleteOrder()

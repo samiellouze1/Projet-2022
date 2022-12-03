@@ -62,6 +62,13 @@ namespace Projet_2022.Data
             builder.Entity<Category>().HasMany(c => c.Categories).WithOne(c => c.ParentCategory).HasForeignKey(c=>c.IdParentCategory).IsRequired(false);
             #endregion
 
+            #region User
+            builder.Entity<User>().HasOne(c => c.Country).WithMany(c => c.Users).HasForeignKey(u => u.IdCountry).IsRequired(false);
+            builder.Entity<User>().HasOne(u => u.Job).WithMany(j => j.Users).HasForeignKey(u => u.IdJob).IsRequired(false);
+            builder.Entity<User>().HasOne(u => u.Manager).WithMany(m => m.Employees).HasForeignKey(u => u.IdManager).IsRequired(false);
+            #endregion
+
+
             base.OnModelCreating(builder);
 
 
@@ -80,5 +87,6 @@ namespace Projet_2022.Data
         public DbSet<OptionGroup> OptionGroups { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Job> Jobs { get; set; }
     }
 }

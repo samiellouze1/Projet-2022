@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 using Projet_2022.Data.Repository;
 
 namespace Projet_2022.Models.Entities
 {
-    public class User :IdentityUser,IEntityBase
+    public class User : IdentityUser, IEntityBase
     {
         [Required]
         public string FirstName { get; set; }
@@ -23,6 +24,19 @@ namespace Projet_2022.Models.Entities
         [Required]
         public DateTime RegistrationDate { get; set; }
         public virtual List<Order> Orders { get; set; }
+        public DateTime HireDate { get; set; }
+        public int Salary { get; set; }
+        public string IdJob { get; set; }
+        [ForeignKey("IdJob")]
+        public virtual Job Job {get;set;}
+        public string IdManager { get; set; }
+        [ForeignKey("IdManager")]
+        public virtual User Manager { get; set; }
+
+        public string IdCountry { get; set; }
+        [ForeignKey("IdCountry")]
+        public virtual Country Country { get; set; }
+        public virtual List<User> Employees { get; set; }
         
     }
 }

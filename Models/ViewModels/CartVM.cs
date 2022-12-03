@@ -1,4 +1,5 @@
 ﻿using Projet_2022.Data.Cart;
+using Projet_2022.Models.Entities;
 
 namespace Projet_2022.Models.ViewModels
 {
@@ -6,6 +7,7 @@ namespace Projet_2022.Models.ViewModels
     {
         public Cart Cart { get; set; }
         public float CartTotal { get; set; }
+        public IEnumerable<Brand> Brands { get; set; }
 
     }
 }

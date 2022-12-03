@@ -14,12 +14,14 @@ namespace Projet_2022.Controllers
         private readonly IProductService _productService;
         private readonly Cart _cart;
         private readonly IOrderService _orderService;
+        private readonly IBrandService _brandService;
 
-        public OrderController(IProductService moviesService, Cart cart, IOrderService ordersService)
+        public OrderController(IProductService moviesService, Cart cart, IOrderService ordersService,IBrandService brandService)
         {
             _productService = moviesService;
             _cart = cart;
             _orderService = ordersService;
+            _brandService = brandService;
         }
 
         public async Task<IActionResult> Index()
@@ -31,7 +33,7 @@ namespace Projet_2022.Controllers
             return View(orders);
         }
 
-        public IActionResult Cart()
+        public async Task<IActionResult> Cart()
         {
             var items = _cart.GetCartItems();
             _cart.CartItems = items;
@@ -39,8 +41,10 @@ namespace Projet_2022.Controllers
             var response = new CartVM()
             {
                 Cart = _cart,
-                CartTotal = _cart.GetCartTotal()
+                CartTotal = _cart.GetCartTotal(),
+                Brands =  await _brandService.GetAllAsync()
             };
+
 
             return View(response);
         }

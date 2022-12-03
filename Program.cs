@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Projet_2022.Data;
 using Projet_2022.Data.Cart;
-using Projet_2022.Data.Extensions;
 using Projet_2022.Data.IServices;
 using Projet_2022.Data.Services;
 using Projet_2022.Models.Entities;
@@ -68,7 +67,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Product}/{action=Index}/{id?}");
+    pattern: "{controller=Order}/{action=Cart}/{id?}");
 AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
 AppDbInitializer.Seed(app);
 

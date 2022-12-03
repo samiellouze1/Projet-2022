@@ -1,0 +1,35 @@
+﻿@using Projet_2022.Models.Entities
+
+
+@{
+	ViewData["Title"] = "My Account";
+}
+@model User
+
+<section class="header_text sub">
+	<img class="pageBanner" src="~/themes/images/pageBanner.png" alt="New products">
+	<h4><span>Product @Model.FirstName @Model.LastName</span></h4>
+</section>
+<section class="main-content">
+	<div class="row">
+		<div class="span9">
+			<div class="row">
+
+				<div class="span5">
+					<address>
+						<strong>City:</strong> <span>@Model.City</span><br>
+						<strong>ZipCode:</strong> <span>@Model.Zipcode</span><br>
+						<strong>Phone:</strong> <span>@Model.Address</span><br>
+					</address>
+				</div>
+				<div class="span5">
+					<p>&nbsp;</p>
+					<a asp-controller="Account" asp-action="Edit">
+						<button class="btn btn-inverse">Edit Information</button>
+					</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>

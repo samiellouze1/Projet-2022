@@ -102,14 +102,13 @@ namespace Projet_2022.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
-            Console.WriteLine("zebbi");
             await _signinmanager.SignOutAsync();
             return RedirectToAction("Index", "Product");
         }
-        public async Task<IActionResult> MyOrders(string Id)
+        public IActionResult MyAccount()
         {
-                var user = await _usermanager.GetUserAsync(HttpContext.User);
-                return View(user.Orders);
+            var user=_usermanager.GetUserAsync(HttpContext.User);
+            return View(user);
         }
 
     }

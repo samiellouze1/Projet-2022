@@ -69,7 +69,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Order}/{action=AddToCart}/{id?}");
+    pattern: "{controller=Product}/{action=Index}/{id?}");
 AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
 AppDbInitializer.Seed(app);
 

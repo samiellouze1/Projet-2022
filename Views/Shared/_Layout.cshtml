@@ -22,7 +22,7 @@
 	<script src="~/themes/js/superfish.js"></script>
 	<script src="~/themes/js/jquery.scrolltotop.js"></script>
 </head>
-<body>
+<body style="background:white;">
 
 	<div id="top-bar" class="container">
 		<div class="row">
@@ -66,15 +66,23 @@
 	</div>
 	<div id="wrapper" class="container">
 			@RenderBody()
-		<section id="footer-bar">
+		<div>
+			<section id="footer-bar"  >
 			<div class="row">
 				@if (User.Identity.IsAuthenticated)
 				{
 					<div class="span3">
-						<h4>Cart</h4>
+						<a asp-controller="Order" asp-action="Cart">
+							<h4>Cart</h4>
+						</a>
 					</div>
 					<div class="span4">
-						<h4>My Account</h4>
+						<a asp-controller="Account" asp-action="MyAccount">
+							<h4>My Account</h4>
+						</a>
+					</div>
+					<div>
+						<a asp-controller="Product" asp-action="Index"><img src="~/themes/images/logo.png" style="height:30px;width:113px;"></a>
 					</div>
 				}
 				else 
@@ -89,13 +97,18 @@
 							<h4>Login</h4>
 						</a>
 					</div>
+					<div>
+						<a asp-controller="Product" asp-action="Index">
+							<img src="~/themes/images/logo.png" style="height:25px;width:100px;padding-top:10px;">
+						</a>
+					</div>
 				}
-
 			</div>
 		</section>
-		<section id="copyright">
+		<section id="copyright" >
 			<span>Projet 2022. Tous les droits sont réservés.</span>
 		</section>
+		</div>
 	</div>
 	<script src="~/themes/js/jquery.flexslider-min.js"></script>
 	<script type="text/javascript">

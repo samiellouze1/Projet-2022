@@ -44,7 +44,7 @@
 						<strong>Product Slug:</strong> <span>@Model.Product.Slug</span><br>
 						<strong>Availability:</strong> <span>@Model.Product.StockStatus</span><br>
 						<strong>Ratings</strong> <span>@Model.Product.Ratings</span><br>
-				</address>									
+					</address>									
 					<h4><strong>Price: $@Model.Product.Price </strong></h4>
 				</div>
 				@if (User.Identity.IsAuthenticated)
@@ -54,7 +54,7 @@
 							<a asp-controller="Order" asp-action="AddToCart" asp-route-id=@Model.Product.Id >
 								<button class="btn btn-inverse" >Add to Cart</button>
 							</a>
-						@if (User.IsInRole("Admin"))
+						@if (User.IsInRole("Admin")||User.IsInRole("Employee"))
 						{
 							<p> &nbsp;</p>
 							<a asp-controller="Product" asp-action="Edit" asp-route-id=@Model.Product.Id>

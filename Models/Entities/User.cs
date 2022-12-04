@@ -37,6 +37,7 @@ namespace Projet_2022.Models.Entities
         [ForeignKey("IdCountry")]
         public virtual Country Country { get; set; }
         public virtual List<User> Employees { get; set; }
+        public bool conge { get; set; }
         
     }
 }

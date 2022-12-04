@@ -75,7 +75,7 @@ namespace Projet_2022.Controllers
         public async Task<IActionResult> CompleteOrder()
         {
             var items = _cart.GetCartItems();
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userId = User.FindFirstValue(ClaimTypes.Name);
             string userEmailAddress = User.FindFirstValue(ClaimTypes.Email);
 
             await _orderService.StoreOrderAsync(items, userId, userEmailAddress);

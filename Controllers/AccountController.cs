@@ -117,8 +117,10 @@ namespace Projet_2022.Controllers
 
             return View(user);
         }
-        public  IActionResult Conge()
+        public async  Task<IActionResult> Conge()
         {
+            var user = await _usermanager.GetUserAsync(User);
+            user.conge = true;
             return View();
         }
 

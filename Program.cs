@@ -6,6 +6,7 @@ using Projet_2022.Data.Cart;
 using Projet_2022.Data.IServices;
 using Projet_2022.Data.Services;
 using Projet_2022.Models.Entities;
+using ScrumandPoker.Data.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMvc().AddRazorRuntimeCompilation();
@@ -36,6 +37,7 @@ builder.Services.AddControllersWithViews();
 
 
 #region Claims
+builder.Services.AddScoped<IUserClaimsPrincipalFactory<User>, ApplicationUserClaimsPrincipalFactory>();
 #endregion
 
 

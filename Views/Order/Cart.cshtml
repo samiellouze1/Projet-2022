@@ -52,7 +52,9 @@
 				</p>
 				<hr />
 				<p class="buttons center">
-					<button class="btn btn-inverse" type="submit" id="checkout">Checkout</button>
+					<a asp-controller="Order" asp-action="OrderCompleted">
+						<button class="btn btn-inverse" type="submit" id="checkout">Checkout</button>
+					</a>
 				</p>
 			</div>
 			<div class="span3 col">

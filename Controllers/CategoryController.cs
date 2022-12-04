@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Projet_2022.Data.IServices;
+using Projet_2022.Models;
+using Projet_2022.Models.Entities;
 using Projet_2022.Models.ViewModels;
 
 namespace Projet_2022.Controllers
@@ -22,5 +24,32 @@ namespace Projet_2022.Controllers
             var categorycategoriesbrands = new CategoryCategoriesBrandsVM() { Category = category, Brands = brands,Categories=categories };
 			return View(categorycategoriesbrands);
 		}
-	}
+
+        public async Task<IActionResult> Create()
+        {
+            var response = new CategoryVM();
+            return View(response);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(CategoryVM categoryvm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(categoryvm);
+            }
+            var newcategory = new Category()
+            {
+                Slug=categoryvm.Slug,
+
+                Description=categoryvm.Description,
+
+                Image=categoryvm.Image,
+
+                AddedAt=DateTime.Now,
+                IdParentCategory=categoryvm.IdParentCategory
+            };
+            await _categoryservice.AddAsync(newcategory);
+            return RedirectToAction(nameof(Index));
+        }
+    }
 }

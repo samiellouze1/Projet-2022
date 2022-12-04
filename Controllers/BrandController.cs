@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Projet_2022.Data.IServices;
+using Projet_2022.Models.Entities;
 using Projet_2022.Models.ViewModels;
+using System.Runtime.InteropServices;
 
 namespace Projet_2022.Controllers
 {
@@ -29,6 +31,27 @@ namespace Projet_2022.Controllers
             var brandcategories = new BrandBrandsCategoriesVM() { Brand = brand, Categories = categories, Brands=brands };
             
             return View(brandcategories);
+        }
+        public async Task<IActionResult> Create()
+        {
+            var response = new BrandVM();
+            return View(response);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(BrandVM brandvm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(brandvm);
+            }
+            var newbrand = new Brand()
+            {
+                Name=brandvm.Name,
+                Description=brandvm.Description,
+                Logo=brandvm.Logo
+            };
+            await _brandservice.AddAsync(newbrand);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

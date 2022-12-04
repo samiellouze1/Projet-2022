@@ -12,5 +12,6 @@ namespace Projet_2022.Data.Repository
         Task AddAsync(T entity);
         Task UpdateAsync(string id, T entity);
         Task DeleteAsync(string id);
+        Task SaveChangesAsync();
     }
 }

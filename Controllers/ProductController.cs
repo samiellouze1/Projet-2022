@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Projet_2022.Data.IServices;
 using Projet_2022.Data.Static;
 using Projet_2022.Models.Entities;
 using Projet_2022.Models.ViewModels;
+using System.Xml.Linq;
 
 namespace Projet_2022.Controllers
 {
@@ -51,6 +53,8 @@ namespace Projet_2022.Controllers
         {
             return View();
         }
+        [Authorize(UserRoles.Admin)]
+        [Authorize(UserRoles.Employee)]
         [HttpPost]
         public async Task<IActionResult> Create(ProductVM productvm)
         {
@@ -76,6 +80,62 @@ namespace Projet_2022.Controllers
             };
             await _service.AddAsync(newproduct);
             return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> Edit(string id)
+        {
+            var productDetails = await _service.GetByIdAsync(id);
+
+            var response = new ProductVM()
+            {
+                 Sku = productDetails.Sku,
+                 Name = productDetails.Name,
+                 Slug = productDetails.Slug,
+                 PrincipalImage = productDetails.PrincipalImage,
+                 Description = productDetails.Description,
+                 Ratings = productDetails.Ratings,
+                 Price = productDetails.Price,
+                 TotalSales = productDetails.TotalSales,
+                 StockStatus = productDetails.StockStatus,
+            };
+            return View(response);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id,ProductVM productDetails)
+        {
+            var dbproduct = await _service.GetByIdAsync(id);
+
+            if (dbproduct != null)
+            {
+                dbproduct.Sku = productDetails.Sku;
+                dbproduct.Name = productDetails.Name;
+                dbproduct.Slug = productDetails.Slug;
+                dbproduct.PrincipalImage = productDetails.PrincipalImage;
+                dbproduct.Description = productDetails.Description;
+                dbproduct.Ratings = productDetails.Ratings;
+                dbproduct.Price = productDetails.Price;
+                dbproduct.TotalSales = productDetails.TotalSales;
+                dbproduct.StockStatus = productDetails.StockStatus;
+                await _service.SaveChangesAsync();
+            }
+
+            ////Remove existing actors
+            //var existingProductsDb = _context.Actors_Movies.Where(n => n.MovieId == data.Id).ToList();
+            //_context.Actors_Movies.RemoveRange(existingActorsDb);
+            //await _context.SaveChangesAsync();
+
+            ////Add Movie Actors
+            //foreach (var actorId in data.ActorIds)
+            //{
+            //    var newActorMovie = new Actor_Movie()
+            //    {
+            //        MovieId = data.Id,
+            //        ActorId = actorId
+            //    };
+            //    await _context.Actors_Movies.AddAsync(newActorMovie);
+            //}
+            //await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
         }
     }
 }

@@ -185,7 +185,9 @@ namespace Projet_2022.Data
                     await roleManager.CreateAsync(new IdentityRole(UserRoles.Client));
 
                 #endregion
+
                 var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<User>>();
+
                 #region user1
                 string user1Email = "user1@p22.com";
 
@@ -207,6 +209,30 @@ namespace Projet_2022.Data
                     };
                     await userManager.CreateAsync(newUser1,"User1123@");
                     await userManager.AddToRoleAsync(newUser1, UserRoles.Client);
+                }
+                #endregion
+
+                #region admin
+                string useradminemail = "useradmin@p22.com";
+
+                var useradmin = await userManager.FindByEmailAsync(useradminemail);
+                if (useradmin==null)
+                {
+                    var newUser2 = new User()
+                    {
+                        Id = "2",
+                        FirstName = "UserAdminFirstName",
+                        LastName = "UserAdminLastName",
+                        Email = useradminemail,
+                        City = "UserAdminCity",
+                        Zipcode = "UserAdminZipCode",
+                        EmailVerification = false,
+                        Phone = "123456789",
+                        UserName = useradminemail,
+                        Address = "Moghrib"
+                    };
+                    await userManager.CreateAsync(newUser2, "Useradmin123@");
+                    await userManager.AddToRoleAsync(newUser2, UserRoles.Admin);
                 }
                 #endregion
             }

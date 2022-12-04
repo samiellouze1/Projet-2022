@@ -46,6 +46,24 @@
 							<li>
 								<a asp-controller="Product" asp-action="Index"><img src="~/themes/images/logo.png" style="height:30px;width:113px;"></a>
 							</li>
+							@if(User.IsInRole("Admin"))
+							{
+							<li>
+								<a asp-controller="Product" asp-action="Stock">Stock Information</a>
+							</li>
+							<li>
+								<a asp-controller="Product" asp-action="Create">Create Product</a>
+							</li>
+							<li>
+								<a asp-controller="Account" asp-action="Employees">Employee Information</a>
+							</li>
+							<li>
+								<a asp-controller="Account" asp-action="CreateEmployee">Create Employee</a>
+							</li>
+							<li>
+								<a asp-controller="Account" asp-action="Users"> User Information</a>
+							</li>
+							}
 						</ul>
 					}
 					else{

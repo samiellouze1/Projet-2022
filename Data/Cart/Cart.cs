@@ -73,5 +73,15 @@ namespace Projet_2022.Data.Cart
             _context.RemoveRange(items);
             await _context.SaveChangesAsync();
         }
+        public float GetCartTax()
+        {
+            var total = GetCartTotal();
+            return total * 0.18f;
+        }
+        public float GetCartAfterTax()
+        {
+            var total = GetCartTotal();
+            return total * 0.82f;
+        }
     }
 }

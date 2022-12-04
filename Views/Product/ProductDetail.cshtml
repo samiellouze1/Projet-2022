@@ -54,6 +54,13 @@
 							<a asp-controller="Order" asp-action="AddToCart" asp-route-id=@Model.Product.Id >
 								<button class="btn btn-inverse" >Add to Cart</button>
 							</a>
+						@if (User.IsInRole("Admin"))
+						{
+							<p> &nbsp;</p>
+							<a asp-controller="Product" asp-action="Edit" asp-route-id=@Model.Product.Id>
+								<button class="btn btn-inverse"> Edit Product</button>
+							</a>
+						}
 					</div>	
 				}
 			</div>

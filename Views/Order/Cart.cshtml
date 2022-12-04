@@ -40,15 +40,15 @@
 				</table>
 				<h4>What would you like to do next?</h4>
 				<p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
-				<label class="text">
-					<input type="text" name="optionsRadios" id="optionsRadios1" value="" >
-					Use Coupon Code
-				</label>
+					<label class="text">
+						Use Coupon Code
+					</label>
+
 				<hr>
 				<p class="cart-total right">
-					<strong>Total Before Tax</strong>:	$100.00<br>
-					<strong>Tax(18%)</strong>: $2.00<br>
-					<strong>Total</strong>: $119.50<br>
+				<strong>Total Before Tax</strong>$@Model.Cart.GetCartTotal().ToString("c")<br>
+				<strong>Tax(18%)</strong>: $@Model.Cart.GetCartTax().ToString("c")<br>
+				<strong>Total</strong>: $@Model.Cart.GetCartAfterTax().ToString("c")<br>
 				</p>
 				<hr />
 				<p class="buttons center">

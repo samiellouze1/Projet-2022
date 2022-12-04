@@ -1,7 +1,7 @@
 ﻿using Projet_2022.Models.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Projet_2022.Models
+namespace Projet_2022.Models.ViewModels
 {
     public class CategoryVM
     {

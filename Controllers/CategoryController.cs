@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Projet_2022.Data.IServices;
-using Projet_2022.Models;
 using Projet_2022.Models.Entities;
 using Projet_2022.Models.ViewModels;
 

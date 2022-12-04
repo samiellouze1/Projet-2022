@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Projet_2022.Data;
 
@@ -11,9 +12,10 @@ using Projet_2022.Data;
 namespace Projet_2022.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221204104120_addedbought")]
+    partial class addedbought
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -466,6 +468,9 @@ namespace Projet_2022.Migrations
                     b.Property<DateTime>("AddedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Bought")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DeletedAt")
                         .HasColumnType("datetime2");
 
@@ -585,9 +590,6 @@ namespace Projet_2022.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("EmailVerification")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Employee")
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")

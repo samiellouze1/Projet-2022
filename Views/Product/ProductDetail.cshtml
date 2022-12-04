@@ -92,7 +92,7 @@
 					<li class="nav-header">Categories</li>
 					@foreach (var item in Model.Categories)
 					{
-						<li><a asp-controller="Product" asp-action="GetProductsByCategory" as-route-id=@item.Id>@item.Name</a></li>
+						<li><a asp-controller="Category" asp-action="Category" asp-route-id=@item.Id>@item.Name</a></li>
 					}
 				</ul>
 			</div>

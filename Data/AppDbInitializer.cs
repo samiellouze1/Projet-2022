@@ -108,7 +108,7 @@ namespace Projet_2022.Data
                         TotalSales=0,
                         StockStatus=10,
                         IdBrand="1",
-                        IdCategory="2"
+                        IdCategory="2",
                     }}) ;
                     context.SaveChanges();
                 }
@@ -167,7 +167,17 @@ namespace Projet_2022.Data
                     });
                     context.SaveChanges();
                 }
-
+                if(!context.Jobs.Any())
+                {
+                    context.Jobs.AddRange(
+                        new Job()
+                        {
+                            Id = "1",
+                            JobTitle = "Worker"
+                        }
+                        ); ;
+                    context.SaveChanges();
+                }
             }
         }
         public static async Task SeedUsersAndRolesAsync(IApplicationBuilder applicationbuilder)
@@ -190,7 +200,6 @@ namespace Projet_2022.Data
 
                 #region user1
                 string user1Email = "user1@p22.com";
-
                 var user1= await userManager.FindByEmailAsync(user1Email);
                 if (user1 == null)
                 {

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Projet_2022.Data;
 using Projet_2022.Data.Static;
 using Projet_2022.Models.Entities;
+using Projet_2022.Models.ViewModels;
 using Projet_2022.Views.ViewModels;
 using System.Security.Claims;
 
@@ -53,6 +55,12 @@ namespace Projet_2022.Controllers
             TempData["Error"] = "Wrong! Try Again";
             return View(loginvm);
         }
+        [Authorize(UserRoles.Admin)]
+        public async Task<IActionResult> Users()
+        {
+            var users = await _context.Users.ToListAsync();
+            return View(users);
+        }
         public IActionResult Register()
         {
             var response = new RegisterVM();
@@ -75,16 +83,16 @@ namespace Projet_2022.Controllers
             }
             var newUser = new User()
             {
-                UserName=registervm.Email,
+                UserName = registervm.Email,
                 FirstName = registervm.FirstName,
                 LastName = registervm.LastName,
                 Email = registervm.Email,
                 City = registervm.City,
                 Zipcode = registervm.Zipcode,
-                Phone= registervm.Phone,
-                Address=registervm.Address,
-                EmailVerification=false
-
+                Phone = registervm.Phone,
+                Address = registervm.Address,
+                EmailVerification = false,
+                Employee=false
             };
             var newUserResponse = await _usermanager.CreateAsync(newUser, registervm.Password);
             if (newUserResponse.Succeeded)
@@ -98,31 +106,86 @@ namespace Projet_2022.Controllers
             }
             return View(registervm);
         }
+        [Authorize(UserRoles.Admin)]
+        public IActionResult CreateEmployee()
+        {
+            var response = new CreateEmployeeVM();
+            return View(response);
+        }
         [HttpPost]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> CreateEmployee(CreateEmployeeVM createemployeevm)
         {
-            await _signinmanager.SignOutAsync();
-            return RedirectToAction("Index", "Product");
-        }
-        public async Task<IActionResult> Delete()
-        {
-            await _signinmanager.SignOutAsync();
-            var user= await _usermanager.GetUserAsync(User);
-            await _usermanager.DeleteAsync(user);
-            return RedirectToAction("Index", "Product");
-        }
-        public async Task<IActionResult> MyAccount()
-        {
-            var user =await _usermanager.GetUserAsync(User);
+            if (!ModelState.IsValid)
+            {
+                return View(createemployeevm);
+            }
 
-            return View(user);
-        }
-        public async  Task<IActionResult> Conge()
-        {
-            var user = await _usermanager.GetUserAsync(User);
-            user.conge = true;
-            return View();
-        }
+            var user = await _usermanager.FindByEmailAsync(createemployeevm.Email);
+            if (user != null)
+            {
+                TempData["Error"] = "This Email Adress has already been taken";
+                return View(createemployeevm);
+            }
+            var newUser = new User()
+            {
+                UserName = createemployeevm.Email,
+                FirstName = createemployeevm.FirstName,
+                LastName = createemployeevm.LastName,
+                Email = createemployeevm.Email,
+                City = createemployeevm.City,
+                Zipcode = createemployeevm.Zipcode,
+                Phone = createemployeevm.Phone,
+                Address = createemployeevm.Address,
+                EmailVerification = false,
+                RegistrationDate=DateTime.Now,
+                HireDate=DateTime.Now,
+                Employee=true,
+                IdJob=createemployeevm.IdJob,
+                Salary=createemployeevm.Salary,
+                IdManager=createemployeevm.IdManager
 
-    }
-}
+            };
+            var newUserResponse = await _usermanager.CreateAsync(newUser, createemployeevm.Password);
+            if (newUserResponse.Succeeded)
+            {
+                {
+                    return RedirectToAction("Index", "Product");
+                }
+                
+            }
+            return View(createemployeevm);
+        }
+            [HttpPost]
+            public async Task<IActionResult> Logout()
+            {
+                await _signinmanager.SignOutAsync();
+                return RedirectToAction("Index", "Product");
+            }
+            public async Task<IActionResult> Delete()
+            {
+                await _signinmanager.SignOutAsync();
+                var user = await _usermanager.GetUserAsync(User);
+                await _usermanager.DeleteAsync(user);
+                return RedirectToAction("Index", "Product");
+            }
+            public async Task<IActionResult> DeleteAccount(string id)
+            {
+                var user = await _usermanager.FindByIdAsync(id);
+                await _usermanager.DeleteAsync(user);
+                return RedirectToAction("Users", "Account");
+            }
+            public async Task<IActionResult> MyAccount()
+            {
+                var user = await _usermanager.GetUserAsync(User);
+
+                return View(user);
+            }
+            public async Task<IActionResult> Conge()
+            {
+                var user = await _usermanager.GetUserAsync(User);
+                user.conge = true;
+                return View();
+            }
+
+        }
+    } 

@@ -33,37 +33,38 @@
 					@if (User.Identity.IsAuthenticated)
 					{
 						<ul class="user-menu">
+							@if (User.IsInRole("Admin"))
+							{
+								<li>
+									<a asp-controller="Product" asp-action="Stock">Stock</a>
+								</li>
+								<li>
+									<a asp-controller="Product" asp-action="Create">Create Product</a>
+								</li>
 
-							<li><a asp-controller="Account" asp-action="MyAccount">My Account</a></li>
-							<li><a asp-controller="Order" asp-action="Cart" >Your Cart</a></li>
-							<li>
-								<form asp-controller="Account" asp-action="Logout">
-									<button>
-										<a>Log out</a>
-									</button>
-								</form>
-							</li>
+								<li>
+									<a asp-controller="Account" asp-action="CreateEmployee">Create Employee</a>
+								</li>
+								<li>
+									<a asp-controller="Account" asp-action="Users"> Users</a>
+								</li>
+							}
+							@if (User.IsInRole("Client"))
+							{
+								<li><a asp-controller="Account" asp-action="MyAccount">My Account</a></li>
+								<li><a asp-controller="Order" asp-action="Cart" >Your Cart</a></li>
+								<li>
+									<form asp-controller="Account" asp-action="Logout">
+										<button>
+											<a>Log out</a>
+										</button>
+									</form>
+								</li>
+							}
 							<li>
 								<a asp-controller="Product" asp-action="Index"><img src="~/themes/images/logo.png" style="height:30px;width:113px;"></a>
 							</li>
-							@if(User.IsInRole("Admin"))
-							{
-							<li>
-								<a asp-controller="Product" asp-action="Stock">Stock Information</a>
-							</li>
-							<li>
-								<a asp-controller="Product" asp-action="Create">Create Product</a>
-							</li>
-							<li>
-								<a asp-controller="Account" asp-action="Employees">Employee Information</a>
-							</li>
-							<li>
-								<a asp-controller="Account" asp-action="CreateEmployee">Create Employee</a>
-							</li>
-							<li>
-								<a asp-controller="Account" asp-action="Users"> User Information</a>
-							</li>
-							}
+
 						</ul>
 					}
 					else{
@@ -143,5 +144,7 @@
 			});
 		});
 	</script>
+	    @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

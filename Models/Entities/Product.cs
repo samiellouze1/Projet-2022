@@ -33,9 +33,7 @@ namespace Projet_2022.Models.Entities
 
         [Required]
         public DateTime AddedAt { get; set; }
-        [Required]
         public DateTime UpdatedAt { get; set; }
-        [Required]
         public DateTime DeletedAt { get; set; }
 
         [Required]
@@ -51,7 +49,7 @@ namespace Projet_2022.Models.Entities
         public string IdCategory { get; set; }
         [ForeignKey("IdCategory")]
         public virtual Category Category { get; set;}
-
+        [Required]
         public virtual List<ProductTag> ProductTags { get; set;}
         public virtual List<ProductGalleryImage> ProductGalleryImages { get; set; }
         public virtual List<OrderItem> OrderItems { get; set; }

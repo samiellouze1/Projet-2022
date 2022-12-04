@@ -27,7 +27,7 @@
 						@foreach (var item in Model.Cart.CartItems)
 						{
 							<tr>
-								<td><a href="product_detail.html"><img alt="" src=@item.Product.PrincipalImage style="height:50px;width:50px;" ></a></td>
+								<td><a><img src=@item.Product.PrincipalImage style="height:50px;width:50px;" ></a></td>
 								<td>@item.Product.Name</td>
 								<td>@item.Amount</td>
 								<td><button style="background-color: #4CAF50;padding: 3px 25px;"></button></td>

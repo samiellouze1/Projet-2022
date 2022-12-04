@@ -38,6 +38,7 @@ namespace Projet_2022.Models.Entities
         public virtual Country Country { get; set; }
         public virtual List<User> Employees { get; set; }
         public bool conge { get; set; }
+        public bool Employee { get; set; }
         
     }
 }

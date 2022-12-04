@@ -50,6 +50,16 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 });
+builder.Services.AddAuthorization(options =>
+{
+
+    options.AddPolicy("Admin",
+        authBuilder =>
+        {
+            authBuilder.RequireRole("Admin");
+        });
+
+});
 #endregion  
 var app = builder.Build();
 
@@ -69,7 +79,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Order}/{action=Cart}/{id?}");
+    pattern: "{controller=Product}/{action=Index}/{id?}");
 AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
 AppDbInitializer.Seed(app);
 

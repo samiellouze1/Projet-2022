@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore;
 using Projet_2022.Data.Cart;
 using Projet_2022.Data.IServices;
 using Projet_2022.Data.Services;
@@ -79,6 +81,15 @@ namespace Projet_2022.Controllers
             string userEmailAddress = User.FindFirstValue(ClaimTypes.Email);
 
             await _orderService.StoreOrderAsync(items, userId, userEmailAddress);
+            foreach (var cartitem in items)
+            {
+                cartitem.Product.TotalSales++;
+                cartitem.Product.StockStatus--;
+                if (cartitem.Product.StockStatus == 0)
+                {
+                    _productService.DeleteAsync(cartitem.Product.Id);
+                }
+            }
             await _cart.ClearCartAsync();
 
             return View("OrderCompleted");

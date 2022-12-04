@@ -66,6 +66,7 @@ namespace Projet_2022.Data
             builder.Entity<User>().HasOne(c => c.Country).WithMany(c => c.Users).HasForeignKey(u => u.IdCountry).IsRequired(false);
             builder.Entity<User>().HasOne(u => u.Job).WithMany(j => j.Users).HasForeignKey(u => u.IdJob).IsRequired(false);
             builder.Entity<User>().HasOne(u => u.Manager).WithMany(m => m.Employees).HasForeignKey(u => u.IdManager).IsRequired(false);
+            builder.Entity<User>().HasOne(u => u.Job).WithMany(j => j.Users).HasForeignKey(u => u.IdJob).IsRequired(false);
             #endregion
 
 

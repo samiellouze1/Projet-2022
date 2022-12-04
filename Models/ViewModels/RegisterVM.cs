@@ -1,7 +1,7 @@
-﻿using Projet_2022.Data.enums;
+﻿
 using System.ComponentModel.DataAnnotations;
 
-namespace Projet_2022.Views.ViewModels
+namespace Projet_2022.Models.ViewModels
 {
     public class RegisterVM
     {

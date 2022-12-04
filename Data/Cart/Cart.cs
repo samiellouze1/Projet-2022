@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Projet_2022.Models.Entities;
 
 namespace Projet_2022.Data.Cart
@@ -12,7 +13,7 @@ namespace Projet_2022.Data.Cart
         {
             _context = context;
         }
-        public void AddItemToCart(Product Product)
+        public async Task AddItemToCart(Product Product)
         {
             var cartitem = _context.CartItems.FirstOrDefault(n => n.Product.Id == Product.Id && n.IdCart == IdCart);
             if (cartitem==null)
@@ -29,6 +30,8 @@ namespace Projet_2022.Data.Cart
             else
             {
                 cartitem.Amount ++;
+
+
             }
         }
         public static Cart GetCart(IServiceProvider services)

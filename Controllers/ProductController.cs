@@ -53,7 +53,7 @@ namespace Projet_2022.Controllers
         {
             return View();
         }
-        [Authorize(UserRoles.Admin)]
+        [Authorize(Roles = "Admin, Employee")]
 
         [HttpPost]
         public async Task<IActionResult> Create(ProductVM productvm)
@@ -117,23 +117,6 @@ namespace Projet_2022.Controllers
                 dbproduct.StockStatus = productDetails.StockStatus;
                 await _service.SaveChangesAsync();
             }
-
-            ////Remove existing actors
-            //var existingProductsDb = _context.Actors_Movies.Where(n => n.MovieId == data.Id).ToList();
-            //_context.Actors_Movies.RemoveRange(existingActorsDb);
-            //await _context.SaveChangesAsync();
-
-            ////Add Movie Actors
-            //foreach (var actorId in data.ActorIds)
-            //{
-            //    var newActorMovie = new Actor_Movie()
-            //    {
-            //        MovieId = data.Id,
-            //        ActorId = actorId
-            //    };
-            //    await _context.Actors_Movies.AddAsync(newActorMovie);
-            //}
-            //await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
         }

@@ -92,7 +92,7 @@ namespace Projet_2022.Controllers
                 Phone = registervm.Phone,
                 Address = registervm.Address,
                 EmailVerification = false,
-                Employee=false
+                Employee = false
             };
             var newUserResponse = await _usermanager.CreateAsync(newUser, registervm.Password);
             if (newUserResponse.Succeeded)
@@ -137,12 +137,12 @@ namespace Projet_2022.Controllers
                 Phone = createemployeevm.Phone,
                 Address = createemployeevm.Address,
                 EmailVerification = false,
-                RegistrationDate=DateTime.Now,
-                HireDate=DateTime.Now,
-                Employee=true,
-                IdJob=createemployeevm.IdJob,
-                Salary=createemployeevm.Salary,
-                IdManager=createemployeevm.IdManager
+                RegistrationDate = DateTime.Now,
+                HireDate = DateTime.Now,
+                Employee = true,
+                IdJob = createemployeevm.IdJob,
+                Salary = createemployeevm.Salary,
+                IdManager = createemployeevm.IdManager
 
             };
             var newUserResponse = await _usermanager.CreateAsync(newUser, createemployeevm.Password);
@@ -151,41 +151,71 @@ namespace Projet_2022.Controllers
                 {
                     return RedirectToAction("Index", "Product");
                 }
-                
+
             }
             return View(createemployeevm);
         }
-            [HttpPost]
-            public async Task<IActionResult> Logout()
-            {
-                await _signinmanager.SignOutAsync();
-                return RedirectToAction("Index", "Product");
-            }
-            public async Task<IActionResult> Delete()
-            {
-                await _signinmanager.SignOutAsync();
-                var user = await _usermanager.GetUserAsync(User);
-                await _usermanager.DeleteAsync(user);
-                return RedirectToAction("Index", "Product");
-            }
-            public async Task<IActionResult> DeleteAccount(string id)
-            {
-                var user = await _usermanager.FindByIdAsync(id);
-                await _usermanager.DeleteAsync(user);
-                return RedirectToAction("Users", "Account");
-            }
-            public async Task<IActionResult> MyAccount()
-            {
-                var user = await _usermanager.GetUserAsync(User);
-
-                return View(user);
-            }
-            public async Task<IActionResult> Conge()
-            {
-                var user = await _usermanager.GetUserAsync(User);
-                user.conge = true;
-                return View();
-            }
-
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signinmanager.SignOutAsync();
+            return RedirectToAction("Index", "Product");
         }
-    } 
+        public async Task<IActionResult> Delete()
+        {
+            await _signinmanager.SignOutAsync();
+            var user = await _usermanager.GetUserAsync(User);
+            await _usermanager.DeleteAsync(user);
+            return RedirectToAction("Index", "Product");
+        }
+        public async Task<IActionResult> DeleteAccount(string id)
+        {
+            var user = await _usermanager.FindByIdAsync(id);
+            await _usermanager.DeleteAsync(user);
+            return RedirectToAction("Users", "Account");
+        }
+        public async Task<IActionResult> MyAccount()
+        {
+            var user = await _usermanager.GetUserAsync(User);
+
+            return View(user);
+        }
+        public async Task<IActionResult> Conge()
+        {
+            var user = await _usermanager.GetUserAsync(User);
+            user.conge = true;
+            return View();
+        }
+        public async Task<IActionResult> Edit(string Id)
+        {
+            var user =_usermanager.FindByIdAsync(Id).Result;
+            var model = new EditVM()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                City=user.City,
+                Zipcode=user.Zipcode,
+                Phone = user.Phone,
+                Address = user.Address
+            };
+            return View(Id,model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id,EditVM editvm)
+        {
+            var dbuser = await _usermanager.FindByIdAsync(id);
+
+            if (dbuser != null)
+            {
+                dbuser.FirstName = editvm.FirstName;
+                dbuser.LastName = editvm.LastName;
+                dbuser.City = editvm.City;
+                dbuser.Zipcode = editvm.Zipcode;
+                dbuser.Address=editvm.Address;
+                dbuser.Phone = editvm.Phone;
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index", "Product");
+        }
+    }
+}

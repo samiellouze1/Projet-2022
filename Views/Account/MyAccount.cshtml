@@ -25,7 +25,7 @@
 				</div>
 				<div class="span5" style="display:flex;">
 					<p>&nbsp;</p>
-					<a asp-controller="Account" asp-action="Edit">
+					<a asp-controller="Account" asp-action="Edit" asp-route-id=@Model.Id>
 						<button class="btn btn-inverse">Edit Information</button>
 					</a>
 				@if (User.Identity.IsAuthenticated && User.IsInRole("Employee"))

@@ -54,7 +54,7 @@ namespace Projet_2022.Controllers
             return View();
         }
         [Authorize(UserRoles.Admin)]
-        [Authorize(UserRoles.Employee)]
+
         [HttpPost]
         public async Task<IActionResult> Create(ProductVM productvm)
         {

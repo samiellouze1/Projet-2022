@@ -17,7 +17,6 @@ namespace Projet_2022.Controllers
         private readonly Cart _cart;
         private readonly IOrderService _orderService;
         private readonly IBrandService _brandService;
-
         public OrderController(IProductService moviesService, Cart cart, IOrderService ordersService,IBrandService brandService)
         {
             _productService = moviesService;
@@ -25,16 +24,13 @@ namespace Projet_2022.Controllers
             _orderService = ordersService;
             _brandService = brandService;
         }
-
         public async Task<IActionResult> Index()
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userId = User.FindFirstValue("Id");
             string userRole = User.FindFirstValue(ClaimTypes.Role);
-
             var orders = await _orderService.GetOrdersByUserIdAndRoleAsync(userId, userRole);
             return View(orders);
         }
-
         public async Task<IActionResult> Cart()
         {
             var items = _cart.GetCartItems();
@@ -50,7 +46,6 @@ namespace Projet_2022.Controllers
 
             return View(response);
         }
-
         public async Task<IActionResult> AddToCart(string id)
         {
             var item = await _productService.GetByIdAsync(id);
@@ -61,8 +56,6 @@ namespace Projet_2022.Controllers
             }
             return RedirectToAction(nameof(Cart));
         }
-
-
         public async Task<IActionResult> RemoveItemFromCart(string id)
         {
             var item = await _productService.GetByIdAsync(id);
@@ -73,14 +66,23 @@ namespace Projet_2022.Controllers
             }
             return RedirectToAction(nameof(Cart));
         }
-
-        public async Task<IActionResult> CompleteOrder()
+        public async Task<IActionResult> OrderCompleted()
         {
             var items = _cart.GetCartItems();
-            string userId = User.FindFirstValue(ClaimTypes.Name);
-            string userEmailAddress = User.FindFirstValue(ClaimTypes.Email);
+            string userId = User.FindFirstValue("Id");
+            string userEmailAddress = User.FindFirstValue("Email");
+            string userZipCode = User.FindFirstValue("ZipCode");
+            string userCity = User.FindFirstValue("City");
+            string userShippingAdress = User.FindFirstValue("Address");
+            string userPhone = User.FindFirstValue("Phonee");
+            Console.WriteLine(userId);
+            Console.WriteLine(userEmailAddress);
+            Console.WriteLine(userZipCode);
+            Console.WriteLine(userCity);
+            Console.WriteLine(userShippingAdress);
+            Console.WriteLine(userPhone);
 
-            await _orderService.StoreOrderAsync(items, userId, userEmailAddress);
+            await _orderService.StoreOrderAsync(items, userId, userEmailAddress, userCity,userZipCode,userShippingAdress,userPhone);
             foreach (var cartitem in items)
             {
                 cartitem.Product.TotalSales++;
@@ -92,7 +94,7 @@ namespace Projet_2022.Controllers
             }
             await _cart.ClearCartAsync();
 
-            return View("OrderCompleted");
+            return View();
         }
     }
 }

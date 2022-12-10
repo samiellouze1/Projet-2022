@@ -30,8 +30,6 @@ namespace Projet_2022.Data.Cart
             else
             {
                 cartitem.Amount ++;
-
-
             }
         }
         public static Cart GetCart(IServiceProvider services)

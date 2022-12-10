@@ -35,6 +35,8 @@
 						<ul class="user-menu">
 							@if (User.IsInRole("Admin"))
 							{
+								<li><a asp-controller="Order" asp-action="Index">Orders</a></li>
+
 								<li>
 									<a asp-controller="Product" asp-action="Stock">Stock</a>
 								</li>

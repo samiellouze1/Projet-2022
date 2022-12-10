@@ -25,12 +25,19 @@ namespace Projet_2022.Data.Services
             return orders;
         }
 
-        public async Task StoreOrderAsync(List<CartItem> items, string userId, string userEmailAddress)
+        public async Task StoreOrderAsync(List<CartItem> items, string userId, string userEmailAddress,string userCity, string userZipCode,string userAddress, string userPhone)
         {
             var order = new Order()
             {
                 IdUser = userId,
-                Email = userEmailAddress
+                Email = userEmailAddress,
+                City= userCity,
+                ZipCode=userZipCode,
+                Shipped=0,
+                DateOfOrder=DateTime.Now,
+                Tax=18/100,
+                ShipAddress=userAddress,
+                Phone=userPhone
             };
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();

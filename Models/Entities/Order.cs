@@ -30,7 +30,6 @@ namespace Projet_2022.Models.Entities
 
         [Required]
         public DateTime DateOfOrder { get; set; }
-        [Required]
         public string IdUser { get; set; }
         [ForeignKey("IdUser")]
         public virtual User User { get; set; }

@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Projet_2022.Data;
 using Projet_2022.Data.Cart;
+using Projet_2022.Data.Extensions;
 using Projet_2022.Data.IServices;
 using Projet_2022.Data.Services;
 using Projet_2022.Models.Entities;
-using ScrumandPoker.Data.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMvc().AddRazorRuntimeCompilation();
@@ -57,6 +57,16 @@ builder.Services.AddAuthorization(options =>
         authBuilder =>
         {
             authBuilder.RequireRole("Admin");
+        });
+
+});
+builder.Services.AddAuthorization(options =>
+{
+
+    options.AddPolicy("Employee",
+        authBuilder =>
+        {
+            authBuilder.RequireRole("Employee");
         });
 
 });

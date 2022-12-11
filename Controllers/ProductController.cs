@@ -120,5 +120,12 @@ namespace Projet_2022.Controllers
             return RedirectToAction(nameof(Index));
 
         }
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var productDetails = await _service.GetByIdAsync(id);
+            await _service.DeleteAsync(id);
+            return RedirectToAction("Index", "Product");
+        }
     }
 }

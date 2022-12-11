@@ -75,12 +75,6 @@ namespace Projet_2022.Controllers
             string userCity = User.FindFirstValue("City");
             string userShippingAdress = User.FindFirstValue("Address");
             string userPhone = User.FindFirstValue("Phonee");
-            Console.WriteLine(userId);
-            Console.WriteLine(userEmailAddress);
-            Console.WriteLine(userZipCode);
-            Console.WriteLine(userCity);
-            Console.WriteLine(userShippingAdress);
-            Console.WriteLine(userPhone);
 
             await _orderService.StoreOrderAsync(items, userId, userEmailAddress, userCity,userZipCode,userShippingAdress,userPhone);
             foreach (var cartitem in items)

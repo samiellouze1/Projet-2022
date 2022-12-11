@@ -60,6 +60,10 @@
 							<a asp-controller="Product" asp-action="Edit" asp-route-id=@Model.Product.Id>
 								<button class="btn btn-inverse"> Edit Product</button>
 							</a>
+							<p> &nbsp;</p>
+							<a asp-controller="Product" asp-action="Delete" asp-route-id=@Model.Product.Id>
+								<button class="btn btn-inverse"> Delete Product</button>
+							</a>
 						}
 					</div>	
 				}

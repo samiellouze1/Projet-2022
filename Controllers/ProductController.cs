@@ -123,9 +123,17 @@ namespace Projet_2022.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            var productDetails = await _service.GetByIdAsync(id);
-            await _service.DeleteAsync(id);
-            return RedirectToAction("Index", "Product");
+            var dbproduct = await _service.GetByIdAsync(id);
+
+            if (dbproduct != null)
+            {
+
+                dbproduct.StockStatus = 0;
+                dbproduct.DeletedAt = DateTime.Now;
+                await _service.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+
         }
     }
 }

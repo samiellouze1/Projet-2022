@@ -28,6 +28,8 @@
 			<ul class="thumbnails listing-products">
 				@foreach (var item in Model.Products)
 				{	
+					@if (item.StockStatus>0)
+					{
 					<li class="span3">
 						<div class="product-box">
 							<span class="sale_tag"></span>
@@ -37,6 +39,7 @@
 							<p class="price">@item.Price</p>
 						</div>
 					</li>
+					}
 				}
 			</ul>
 			<hr>

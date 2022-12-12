@@ -55,14 +55,15 @@
 							{
 								<li><a asp-controller="Account" asp-action="MyAccount">My Account</a></li>
 								<li><a asp-controller="Order" asp-action="Cart" >Your Cart</a></li>
-								<li>
+
+							}
+															<li>
 									<form asp-controller="Account" asp-action="Logout">
 										<button>
 											<a>Log out</a>
 										</button>
 									</form>
 								</li>
-							}
 							<li>
 								<a asp-controller="Product" asp-action="Index"><img src="~/themes/images/logo.png" style="height:30px;width:113px;"></a>
 							</li>

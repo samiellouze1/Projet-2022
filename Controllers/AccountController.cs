@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Projet_2022.Data;
+using Projet_2022.Data.IServices;
 using Projet_2022.Data.Static;
 using Projet_2022.Models.Entities;
 using Projet_2022.Models.ViewModels;
@@ -171,7 +172,31 @@ namespace Projet_2022.Controllers
         public async Task<IActionResult> DeleteAccount(string id)
         {
             var user = await _usermanager.FindByIdAsync(id);
-            await _usermanager.DeleteAsync(user);
+            try
+            {
+                await _usermanager.DeleteAsync(user);
+            }
+            catch
+            {
+                var users = _usermanager.Users;
+                foreach (var c in users)
+                {
+                    if (c.IdManager==user.Id)
+                    {
+                        c.IdManager = null;
+                    }
+                }
+                var orders = _context.Orders;
+                foreach (var order in orders)
+                {
+                    if (order.IdUser==user.Id)
+                    {
+                        order.IdUser = null;
+                    }
+                }
+                await _context.SaveChangesAsync();
+                await _usermanager.DeleteAsync(user);
+            }
             return RedirectToAction("Users", "Account");
         }
         public async Task<IActionResult> MyAccount()
